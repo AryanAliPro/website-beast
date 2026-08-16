@@ -1,0 +1,3792 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ATELIER VANGUARD — Bespoke Architectural Remodelling & Interior Craft</title>
+  <meta name="description" content="Award-winning luxury architectural remodelling and design-build studio. Transforming historic residences, chef's kitchens, and whole-home estates into enduring spatial masterpieces." />
+
+  <!-- Google Fonts: Playfair Display + Plus Jakarta Sans + Cinzel -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+
+  <!-- GSAP Core & ScrollTrigger -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <style>
+    /* ==========================================================================
+       DESIGN TOKENS & SYSTEM
+       ========================================================================== */
+    :root {
+      /* Palette */
+      --bg-alabaster: #F9F7F2;
+      --bg-cream: #F2EDE4;
+      --bg-warm-stone: #E8E2D5;
+      --bg-obsidian: #0F1113;
+      --bg-charcoal: #181B1E;
+      --bg-slate: #24292F;
+      --card-dark: #1E2227;
+
+      /* Text */
+      --text-primary: #111315;
+      --text-muted: #5C626A;
+      --text-light-muted: #9BA3AF;
+      --text-inverse: #F9F7F2;
+
+      /* Accent & Materials */
+      --accent-terracotta: #C36B3D;
+      --accent-terracotta-hover: #A8572C;
+      --accent-brass: #B8966C;
+      --accent-brass-light: #D4B68D;
+      --border-light: rgba(17, 19, 21, 0.12);
+      --border-dark: rgba(249, 247, 242, 0.12);
+
+      /* Typography */
+      --font-serif: 'Playfair Display', Georgia, serif;
+      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-display: 'Cinzel', 'Playfair Display', serif;
+
+      /* Spacing & Radii */
+      --radius-sm: 4px;
+      --radius-md: 8px;
+      --radius-lg: 16px;
+      --radius-full: 9999px;
+      --container-max: 1360px;
+      --header-height: 84px;
+
+      /* Transitions */
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* Reset & Base */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-alabaster);
+      color: var(--text-primary);
+      font-family: var(--font-sans);
+      font-size: 16px;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    ::selection {
+      background-color: var(--accent-terracotta);
+      color: #ffffff;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button, input, select, textarea {
+      font: inherit;
+      color: inherit;
+    }
+
+    /* Container Utility */
+    .container {
+      width: 100%;
+      max-width: var(--container-max);
+      margin-left: auto;
+      margin-right: auto;
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding-left: 1.25rem;
+        padding-right: 1.25rem;
+      }
+    }
+
+    /* Blueprint Background Accents */
+    .blueprint-grid-subtle {
+      background-size: 40px 40px;
+      background-image: 
+        linear-gradient(to right, rgba(17, 19, 21, 0.04) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(17, 19, 21, 0.04) 1px, transparent 1px);
+    }
+
+    .blueprint-grid-dark {
+      background-size: 40px 40px;
+      background-image: 
+        linear-gradient(to right, rgba(249, 247, 242, 0.04) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(249, 247, 242, 0.04) 1px, transparent 1px);
+    }
+
+    /* Architectural Coordinate Tags */
+    .arch-tag {
+      font-family: var(--font-sans);
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-weight: 600;
+      color: var(--accent-terracotta);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .arch-tag::before {
+      content: '';
+      display: inline-block;
+      width: 14px;
+      height: 1px;
+      background-color: currentColor;
+    }
+
+    .arch-tag-light {
+      color: var(--accent-brass-light);
+    }
+
+    /* Typography Styles */
+    .heading-display {
+      font-family: var(--font-serif);
+      font-weight: 600;
+      line-height: 1.12;
+      letter-spacing: -0.02em;
+    }
+
+    .heading-caps {
+      font-family: var(--font-display);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    /* Buttons & Interactive Elements */
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      background-color: var(--text-primary);
+      color: var(--text-inverse);
+      padding: 1.05rem 2.2rem;
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+      font-size: 0.9rem;
+      letter-spacing: 0.04em;
+      border: 1px solid var(--text-primary);
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.35s var(--ease-out);
+      text-transform: uppercase;
+    }
+
+    .btn-primary::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--accent-terracotta);
+      transform: translateY(100%);
+      transition: transform 0.35s var(--ease-out);
+      z-index: 0;
+    }
+
+    .btn-primary:hover::after {
+      transform: translateY(0);
+    }
+
+    .btn-primary span, .btn-primary svg {
+      position: relative;
+      z-index: 1;
+    }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      background: transparent;
+      color: var(--text-primary);
+      padding: 1.05rem 2.2rem;
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+      font-size: 0.9rem;
+      letter-spacing: 0.04em;
+      border: 1px solid var(--border-light);
+      cursor: pointer;
+      transition: all 0.3s var(--ease-out);
+      text-transform: uppercase;
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--text-primary);
+      background-color: rgba(17, 19, 21, 0.03);
+    }
+
+    /* Masked Headline Reveal Helpers */
+    .mask-wrap {
+      overflow: hidden;
+      display: block;
+    }
+    .mask-wrap .line {
+      display: block;
+      transform: translateY(110%);
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--bg-alabaster);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #C8C3BA;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--accent-terracotta);
+    }
+
+    /* ==========================================================================
+       TOP ANNOUNCEMENT BAR & NAVIGATION
+       ========================================================================== */
+    .top-status-bar {
+      background-color: var(--bg-obsidian);
+      color: #D3D8E0;
+      font-size: 0.75rem;
+      letter-spacing: 0.06em;
+      padding: 0.55rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .status-pulse {
+      display: inline-block;
+      width: 7px;
+      height: 7px;
+      background-color: #2ED573;
+      border-radius: 50%;
+      box-shadow: 0 0 0 0 rgba(46, 213, 115, 0.7);
+      animation: pulse-ring 2s infinite;
+    }
+
+    @keyframes pulse-ring {
+      0% { box-shadow: 0 0 0 0 rgba(46, 213, 115, 0.7); }
+      70% { box-shadow: 0 0 0 7px rgba(46, 213, 115, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(46, 213, 115, 0); }
+    }
+
+    .main-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background-color: rgba(249, 247, 242, 0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-light);
+      height: var(--header-height);
+      display: flex;
+      align-items: center;
+      transition: background-color 0.3s ease;
+    }
+
+    .nav-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+
+    .brand-symbol {
+      width: 38px;
+      height: 38px;
+      background: var(--bg-obsidian);
+      color: var(--text-inverse);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1.1rem;
+      border: 1px solid var(--accent-brass);
+    }
+
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-name {
+      font-family: var(--font-display);
+      font-size: 1.18rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      color: var(--text-primary);
+      line-height: 1.1;
+    }
+
+    .brand-sub {
+      font-size: 0.62rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent-terracotta);
+      font-weight: 600;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2.2rem;
+      list-style: none;
+    }
+
+    .nav-link {
+      font-size: 0.86rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      color: var(--text-primary);
+      position: relative;
+      padding: 0.4rem 0;
+      transition: color 0.2s;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0%;
+      height: 1.5px;
+      background-color: var(--accent-terracotta);
+      transition: width 0.3s var(--ease-out);
+    }
+
+    .nav-link:hover {
+      color: var(--accent-terracotta);
+    }
+    .nav-link:hover::after {
+      width: 100%;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 1.4rem;
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.5rem;
+    }
+
+    @media (max-width: 992px) {
+      .nav-links {
+        display: none;
+      }
+      .mobile-menu-btn {
+        display: flex;
+      }
+    }
+
+    /* Mobile Drawer */
+    .mobile-drawer {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 85%;
+      max-width: 400px;
+      background: var(--bg-obsidian);
+      color: var(--text-inverse);
+      z-index: 1000;
+      padding: 2.5rem 2rem;
+      transform: translateX(100%);
+      transition: transform 0.4s var(--ease-out);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .mobile-drawer.active {
+      transform: translateX(0);
+    }
+
+    .drawer-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: 999;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .drawer-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* ==========================================================================
+       HERO SECTION — ASYMMETRIC ARCHITECTURAL SPLIT
+       ========================================================================== */
+    .hero-section {
+      padding: 4.5rem 0 5rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 1fr;
+      gap: 3.5rem;
+      align-items: center;
+    }
+
+    @media (max-width: 992px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+      }
+    }
+
+    .hero-content {
+      max-width: 640px;
+    }
+
+    .hero-eyebrow {
+      margin-bottom: 1.25rem;
+    }
+
+    .hero-title {
+      font-size: clamp(2.5rem, 4.8vw, 4.3rem);
+      color: var(--text-primary);
+      margin-bottom: 1.6rem;
+      line-height: 1.08;
+    }
+
+    .hero-title em {
+      font-style: italic;
+      color: var(--accent-terracotta);
+      font-family: var(--font-serif);
+      font-weight: 400;
+    }
+
+    .hero-description {
+      font-size: 1.12rem;
+      line-height: 1.7;
+      color: var(--text-muted);
+      margin-bottom: 2.2rem;
+      max-width: 540px;
+    }
+
+    .hero-cta-cluster {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      margin-bottom: 3.5rem;
+      flex-wrap: wrap;
+    }
+
+    /* Hero Media Stack */
+    .hero-media-wrapper {
+      position: relative;
+    }
+
+    .hero-media-frame {
+      position: relative;
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      box-shadow: 0 24px 60px -15px rgba(17, 19, 21, 0.18);
+      border: 1px solid var(--border-light);
+    }
+
+    .hero-media-frame img {
+      width: 100%;
+      height: 560px;
+      object-fit: cover;
+      transition: transform 0.8s var(--ease-out);
+    }
+
+    @media (max-width: 768px) {
+      .hero-media-frame img {
+        height: 380px;
+      }
+    }
+
+    .hero-media-frame:hover img {
+      transform: scale(1.03);
+    }
+
+    /* Blueprint Overlay Marker */
+    .blueprint-badge {
+      position: absolute;
+      bottom: 1.5rem;
+      left: 1.5rem;
+      background: rgba(15, 17, 19, 0.88);
+      backdrop-filter: blur(10px);
+      color: #fff;
+      padding: 0.9rem 1.4rem;
+      border-radius: var(--radius-sm);
+      border-left: 3px solid var(--accent-terracotta);
+      font-size: 0.82rem;
+      max-width: 320px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+
+    .blueprint-badge-title {
+      font-family: var(--font-display);
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      color: var(--accent-brass-light);
+      margin-bottom: 0.2rem;
+    }
+
+    .blueprint-badge-text {
+      font-size: 0.84rem;
+      font-weight: 500;
+      color: #F9F7F2;
+      line-height: 1.35;
+    }
+
+    .floating-dimension-tag {
+      position: absolute;
+      top: -1rem;
+      right: 2rem;
+      background: var(--bg-cream);
+      border: 1px solid var(--border-light);
+      padding: 0.5rem 1rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      color: var(--text-primary);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+    }
+
+    /* Trust Metric Bar */
+    .metric-ticker-strip {
+      border-top: 1px solid var(--border-light);
+      border-bottom: 1px solid var(--border-light);
+      background-color: var(--bg-cream);
+      padding: 2.2rem 0;
+    }
+
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+    }
+
+    @media (max-width: 992px) {
+      .metric-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+      }
+    }
+
+    @media (max-width: 500px) {
+      .metric-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .metric-item {
+      display: flex;
+      flex-direction: column;
+      border-right: 1px solid var(--border-light);
+      padding-right: 1.5rem;
+    }
+
+    .metric-item:last-child {
+      border-right: none;
+      padding-right: 0;
+    }
+
+    @media (max-width: 992px) {
+      .metric-item {
+        border-right: none;
+        padding-right: 0;
+      }
+    }
+
+    .metric-val {
+      font-family: var(--font-display);
+      font-size: 2.4rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 1.05;
+      margin-bottom: 0.35rem;
+    }
+
+    .metric-val span {
+      color: var(--accent-terracotta);
+    }
+
+    .metric-label {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      font-weight: 500;
+      letter-spacing: 0.02em;
+    }
+
+    /* ==========================================================================
+       SECTION: INTERACTIVE BEFORE & AFTER TRANSFORMATION SHOWCASE
+       ========================================================================== */
+    .transformation-section {
+      padding: 6.5rem 0;
+      background-color: var(--bg-obsidian);
+      color: var(--text-inverse);
+      position: relative;
+    }
+
+    .section-header-centered {
+      text-align: center;
+      max-width: 760px;
+      margin: 0 auto 3.5rem auto;
+    }
+
+    .section-title-light {
+      font-size: clamp(2rem, 3.8vw, 3.2rem);
+      color: var(--text-inverse);
+      margin-top: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .section-desc-light {
+      font-size: 1.05rem;
+      color: var(--text-light-muted);
+      line-height: 1.65;
+    }
+
+    /* Room Scenario Switcher Tabs */
+    .scenario-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 0.75rem;
+      margin-bottom: 2.5rem;
+      flex-wrap: wrap;
+    }
+
+    .scenario-btn {
+      background: var(--bg-charcoal);
+      color: var(--text-light-muted);
+      border: 1px solid var(--border-dark);
+      padding: 0.65rem 1.4rem;
+      border-radius: var(--radius-full);
+      font-size: 0.84rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .scenario-btn.active, .scenario-btn:hover {
+      background: var(--accent-terracotta);
+      color: #fff;
+      border-color: var(--accent-terracotta);
+    }
+
+    /* Slider Container */
+    .before-after-wrapper {
+      max-width: 1140px;
+      margin: 0 auto;
+      position: relative;
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.15);
+      box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+      user-select: none;
+      height: 600px;
+    }
+
+    @media (max-width: 768px) {
+      .before-after-wrapper {
+        height: 400px;
+      }
+    }
+
+    .ba-layer {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .ba-after-layer {
+      z-index: 1;
+    }
+
+    .ba-after-layer img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .ba-before-layer {
+      z-index: 2;
+      position: absolute;
+      inset: 0;
+      width: 50%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .ba-before-layer img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 1140px;
+      height: 600px;
+      max-width: none;
+      object-fit: cover;
+      filter: grayscale(10%) contrast(105%);
+    }
+
+    @media (max-width: 1140px) {
+      .ba-before-layer img {
+        width: 100vw;
+        max-width: none;
+      }
+    }
+
+    /* Slider Drag Handle */
+    .ba-handle {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 3px;
+      background: #FFFFFF;
+      z-index: 10;
+      cursor: ew-resize;
+      transform: translateX(-50%);
+      box-shadow: 0 0 15px rgba(0,0,0,0.5);
+    }
+
+    .ba-handle-btn {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 48px;
+      height: 48px;
+      background: #FFFFFF;
+      border: 2px solid var(--accent-terracotta);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+      color: var(--text-primary);
+      cursor: ew-resize;
+    }
+
+    .ba-badge-label {
+      position: absolute;
+      top: 1.5rem;
+      padding: 0.4rem 1rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      z-index: 5;
+      pointer-events: none;
+    }
+
+    .ba-before-badge {
+      left: 1.5rem;
+      background: rgba(0, 0, 0, 0.75);
+      color: #FFFFFF;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .ba-after-badge {
+      right: 1.5rem;
+      background: var(--accent-terracotta);
+      color: #FFFFFF;
+    }
+
+    /* Interactive Hotspots */
+    .ba-hotspot {
+      position: absolute;
+      z-index: 8;
+      transform: translate(-50%, -50%);
+      cursor: pointer;
+    }
+
+    .hotspot-pulse {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: rgba(195, 107, 61, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: hotspot-wave 2s infinite;
+      transition: transform 0.2s;
+    }
+
+    .hotspot-dot {
+      width: 14px;
+      height: 14px;
+      background: var(--accent-terracotta);
+      border: 2px solid #FFFFFF;
+      border-radius: 50%;
+    }
+
+    .ba-hotspot:hover .hotspot-pulse {
+      transform: scale(1.25);
+    }
+
+    @keyframes hotspot-wave {
+      0% { box-shadow: 0 0 0 0 rgba(195, 107, 61, 0.8); }
+      70% { box-shadow: 0 0 0 16px rgba(195, 107, 61, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(195, 107, 61, 0); }
+    }
+
+    .hotspot-card {
+      position: absolute;
+      bottom: calc(100% + 12px);
+      left: 50%;
+      transform: translateX(-50%) translateY(10px);
+      background: rgba(15, 17, 19, 0.95);
+      backdrop-filter: blur(12px);
+      color: #fff;
+      border: 1px solid var(--accent-brass);
+      padding: 0.9rem 1.2rem;
+      border-radius: var(--radius-sm);
+      width: 250px;
+      font-size: 0.8rem;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.25s ease;
+      pointer-events: none;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    .ba-hotspot:hover .hotspot-card, .ba-hotspot.active .hotspot-card {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .hotspot-card-title {
+      font-family: var(--font-display);
+      font-size: 0.72rem;
+      color: var(--accent-brass-light);
+      margin-bottom: 0.25rem;
+      letter-spacing: 0.08em;
+    }
+
+    .hotspot-card-desc {
+      color: #E2E8F0;
+      line-height: 1.4;
+    }
+
+    /* Transformation Specs Bar */
+    .trans-specs-bar {
+      max-width: 1140px;
+      margin: 2.5rem auto 0 auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    @media (max-width: 768px) {
+      .trans-specs-bar {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .trans-spec-card {
+      background: var(--bg-charcoal);
+      border: 1px solid var(--border-dark);
+      padding: 1.4rem 1.6rem;
+      border-radius: var(--radius-sm);
+    }
+
+    .trans-spec-title {
+      font-family: var(--font-display);
+      font-size: 0.76rem;
+      color: var(--accent-brass-light);
+      letter-spacing: 0.1em;
+      margin-bottom: 0.4rem;
+    }
+
+    .trans-spec-val {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--text-inverse);
+    }
+
+    /* ==========================================================================
+       SECTION: DISCIPLINES / SPACES WE TRANSFORM (OFFSET EDITORIAL)
+       ========================================================================== */
+    .disciplines-section {
+      padding: 6.5rem 0;
+      background-color: var(--bg-alabaster);
+    }
+
+    .discipline-row {
+      display: grid;
+      grid-template-columns: 1fr 1.1fr;
+      gap: 4.5rem;
+      align-items: center;
+      margin-bottom: 6rem;
+    }
+
+    @media (max-width: 992px) {
+      .discipline-row {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+        margin-bottom: 4rem;
+      }
+    }
+
+    .discipline-row:last-child {
+      margin-bottom: 0;
+    }
+
+    .discipline-row.reversed {
+      grid-template-columns: 1.1fr 1fr;
+    }
+
+    @media (max-width: 992px) {
+      .discipline-row.reversed {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .discipline-row.reversed .discipline-media {
+      order: 1;
+    }
+    .discipline-row.reversed .discipline-content {
+      order: 2;
+    }
+
+    @media (max-width: 992px) {
+      .discipline-row.reversed .discipline-media {
+        order: 2;
+      }
+      .discipline-row.reversed .discipline-content {
+        order: 1;
+      }
+    }
+
+    .discipline-number {
+      font-family: var(--font-display);
+      font-size: 3.5rem;
+      font-weight: 700;
+      color: var(--bg-warm-stone);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+
+    .discipline-title {
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      margin-bottom: 1.2rem;
+      color: var(--text-primary);
+    }
+
+    .discipline-desc {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: 1.8rem;
+    }
+
+    .discipline-features {
+      list-style: none;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.8rem;
+      margin-bottom: 2rem;
+    }
+
+    @media (max-width: 600px) {
+      .discipline-features {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .discipline-feature-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+
+    .discipline-feature-item svg {
+      color: var(--accent-terracotta);
+      flex-shrink: 0;
+    }
+
+    .discipline-media-frame {
+      position: relative;
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      border: 1px solid var(--border-light);
+      box-shadow: 0 20px 45px rgba(17, 19, 21, 0.08);
+    }
+
+    .discipline-media-frame img {
+      width: 100%;
+      height: 480px;
+      object-fit: cover;
+      transition: transform 0.7s var(--ease-out);
+    }
+
+    @media (max-width: 768px) {
+      .discipline-media-frame img {
+        height: 340px;
+      }
+    }
+
+    .discipline-media-frame:hover img {
+      transform: scale(1.04);
+    }
+
+    .discipline-pill {
+      position: absolute;
+      top: 1.25rem;
+      right: 1.25rem;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(8px);
+      padding: 0.4rem 0.9rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      color: var(--text-primary);
+      border: 1px solid var(--border-light);
+    }
+
+    /* ==========================================================================
+       SECTION: INTERACTIVE REMODEL ESTIMATOR & SCOPE BUILDER
+       ========================================================================== */
+    .estimator-section {
+      padding: 6.5rem 0;
+      background-color: var(--bg-cream);
+      border-top: 1px solid var(--border-light);
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .estimator-card {
+      background: #FFFFFF;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-light);
+      box-shadow: 0 20px 60px rgba(17, 19, 21, 0.06);
+      display: grid;
+      grid-template-columns: 1.3fr 1fr;
+      overflow: hidden;
+    }
+
+    @media (max-width: 992px) {
+      .estimator-card {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .estimator-inputs {
+      padding: 3.5rem;
+    }
+
+    @media (max-width: 768px) {
+      .estimator-inputs {
+        padding: 2rem 1.5rem;
+      }
+    }
+
+    .estimator-step-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-primary);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .step-num {
+      width: 22px;
+      height: 22px;
+      background: var(--accent-terracotta);
+      color: #fff;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+    }
+
+    /* Room Selectors Grid */
+    .rooms-selector-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.85rem;
+      margin-bottom: 2.2rem;
+    }
+
+    @media (max-width: 600px) {
+      .rooms-selector-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .room-opt-label {
+      cursor: pointer;
+      display: block;
+    }
+
+    .room-opt-label input {
+      display: none;
+    }
+
+    .room-opt-box {
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-sm);
+      padding: 1rem 0.85rem;
+      text-align: center;
+      background: var(--bg-alabaster);
+      transition: all 0.2s ease;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .room-opt-label input:checked + .room-opt-box {
+      border-color: var(--accent-terracotta);
+      background: #FFF7F2;
+      color: var(--accent-terracotta);
+      box-shadow: 0 0 0 1px var(--accent-terracotta);
+    }
+
+    /* Finish Tier Radios */
+    .tier-selector-group {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.85rem;
+      margin-bottom: 2.2rem;
+    }
+
+    @media (max-width: 600px) {
+      .tier-selector-group {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .tier-opt-label {
+      cursor: pointer;
+      display: block;
+    }
+    .tier-opt-label input {
+      display: none;
+    }
+    .tier-opt-box {
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-sm);
+      padding: 1.1rem 1rem;
+      background: var(--bg-alabaster);
+      transition: all 0.2s ease;
+    }
+    .tier-opt-name {
+      font-weight: 700;
+      font-size: 0.88rem;
+      margin-bottom: 0.25rem;
+      color: var(--text-primary);
+    }
+    .tier-opt-desc {
+      font-size: 0.74rem;
+      color: var(--text-muted);
+      line-height: 1.35;
+    }
+    .tier-opt-label input:checked + .tier-opt-box {
+      border-color: var(--accent-terracotta);
+      background: #FFF7F2;
+      box-shadow: 0 0 0 1px var(--accent-terracotta);
+    }
+    .tier-opt-label input:checked + .tier-opt-box .tier-opt-name {
+      color: var(--accent-terracotta);
+    }
+
+    /* Slider Range */
+    .slider-container {
+      margin-bottom: 1.5rem;
+    }
+    .slider-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+    }
+    .slider-val-display {
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--accent-terracotta);
+      font-family: var(--font-display);
+    }
+    .sqft-slider {
+      width: 100%;
+      height: 6px;
+      background: #D9D3C7;
+      border-radius: 3px;
+      outline: none;
+      -webkit-appearance: none;
+      cursor: pointer;
+    }
+    .sqft-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--accent-terracotta);
+      border: 3px solid #FFFFFF;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+      cursor: pointer;
+    }
+
+    /* Estimator Output Panel */
+    .estimator-output {
+      background: var(--bg-obsidian);
+      color: #fff;
+      padding: 3.5rem 3rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border-left: 1px solid var(--border-dark);
+      position: relative;
+    }
+
+    @media (max-width: 768px) {
+      .estimator-output {
+        padding: 2.5rem 1.5rem;
+      }
+    }
+
+    .output-eyebrow {
+      font-family: var(--font-display);
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      color: var(--accent-brass-light);
+      margin-bottom: 0.5rem;
+    }
+
+    .output-price-range {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 3.2vw, 2.8rem);
+      font-weight: 700;
+      color: #FFFFFF;
+      line-height: 1.1;
+      margin-bottom: 0.4rem;
+    }
+
+    .output-price-note {
+      font-size: 0.78rem;
+      color: var(--text-light-muted);
+      margin-bottom: 2rem;
+    }
+
+    .output-metrics-list {
+      list-style: none;
+      border-top: 1px solid var(--border-dark);
+      border-bottom: 1px solid var(--border-dark);
+      padding: 1.4rem 0;
+      margin-bottom: 2.5rem;
+    }
+
+    .output-metric-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.5rem 0;
+      font-size: 0.88rem;
+    }
+
+    .output-metric-row .metric-k {
+      color: var(--text-light-muted);
+    }
+    .output-metric-row .metric-v {
+      font-weight: 600;
+      color: #fff;
+    }
+
+    /* ==========================================================================
+       SECTION: CURATED WORKS / ARCHITECTURAL PORTFOLIO
+       ========================================================================== */
+    .portfolio-section {
+      padding: 6.5rem 0;
+      background-color: var(--bg-alabaster);
+    }
+
+    .portfolio-filter-bar {
+      display: flex;
+      justify-content: center;
+      gap: 0.6rem;
+      margin-bottom: 3.5rem;
+      flex-wrap: wrap;
+    }
+
+    .filter-tab-btn {
+      background: transparent;
+      border: 1px solid var(--border-light);
+      padding: 0.6rem 1.4rem;
+      border-radius: var(--radius-full);
+      font-size: 0.84rem;
+      font-weight: 600;
+      cursor: pointer;
+      color: var(--text-muted);
+      transition: all 0.2s ease;
+    }
+
+    .filter-tab-btn.active, .filter-tab-btn:hover {
+      background: var(--text-primary);
+      color: var(--text-inverse);
+      border-color: var(--text-primary);
+    }
+
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2.5rem;
+    }
+
+    @media (max-width: 992px) {
+      .portfolio-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .portfolio-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .project-card {
+      background: #FFFFFF;
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      border: 1px solid var(--border-light);
+      box-shadow: 0 10px 30px rgba(17, 19, 21, 0.04);
+      cursor: pointer;
+      transition: transform 0.4s var(--ease-out), box-shadow 0.4s var(--ease-out);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .project-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 24px 50px rgba(17, 19, 21, 0.12);
+    }
+
+    .project-media-wrap {
+      position: relative;
+      height: 320px;
+      overflow: hidden;
+    }
+
+    .project-media-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.7s var(--ease-out);
+    }
+
+    .project-card:hover .project-media-wrap img {
+      transform: scale(1.06);
+    }
+
+    .project-badge-tag {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      background: rgba(15, 17, 19, 0.85);
+      backdrop-filter: blur(6px);
+      color: #fff;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.35rem 0.75rem;
+      border-radius: var(--radius-sm);
+    }
+
+    .project-body {
+      padding: 1.8rem 1.6rem;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .project-meta-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.78rem;
+      color: var(--accent-terracotta);
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.4rem;
+    }
+
+    .project-title {
+      font-size: 1.35rem;
+      color: var(--text-primary);
+      margin-bottom: 0.6rem;
+      line-height: 1.25;
+    }
+
+    .project-summary {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.55;
+      margin-bottom: 1.4rem;
+    }
+
+    .project-footer-specs {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border-light);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .project-action-link {
+      font-weight: 700;
+      color: var(--text-primary);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: color 0.2s;
+    }
+
+    .project-card:hover .project-action-link {
+      color: var(--accent-terracotta);
+    }
+
+    /* ==========================================================================
+       SECTION: TACTILE MATERIAL ATELIER
+       ========================================================================== */
+    .material-section {
+      padding: 6.5rem 0;
+      background-color: var(--bg-obsidian);
+      color: var(--text-inverse);
+    }
+
+    .material-atelier-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      margin-top: 3.5rem;
+    }
+
+    @media (max-width: 992px) {
+      .material-atelier-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .swatches-strip {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    @media (max-width: 640px) {
+      .swatches-strip {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .material-swatch-card {
+      border: 2px solid transparent;
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      cursor: pointer;
+      background: var(--bg-charcoal);
+      transition: all 0.25s ease;
+      text-align: center;
+    }
+
+    .material-swatch-card.active {
+      border-color: var(--accent-terracotta);
+      transform: translateY(-4px);
+    }
+
+    .swatch-thumb {
+      height: 80px;
+      width: 100%;
+      object-fit: cover;
+    }
+
+    .swatch-name {
+      padding: 0.5rem 0.25rem;
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: #E2E8F0;
+    }
+
+    .material-spotlight-display {
+      background: var(--bg-charcoal);
+      border: 1px solid var(--border-dark);
+      border-radius: var(--radius-sm);
+      padding: 2.2rem;
+    }
+
+    .mat-spec-heading {
+      font-size: 1.8rem;
+      color: #FFFFFF;
+      margin-bottom: 0.5rem;
+    }
+
+    .mat-origin-tag {
+      font-size: 0.82rem;
+      color: var(--accent-brass-light);
+      margin-bottom: 1.2rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+    }
+
+    .mat-story-p {
+      color: var(--text-light-muted);
+      font-size: 0.95rem;
+      line-height: 1.65;
+      margin-bottom: 1.8rem;
+    }
+
+    .mat-tech-specs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      border-top: 1px solid var(--border-dark);
+      padding-top: 1.4rem;
+    }
+
+    @media (max-width: 600px) {
+      .mat-tech-specs {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .mat-tech-col .k {
+      font-size: 0.72rem;
+      color: var(--text-light-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.2rem;
+    }
+    .mat-tech-col .v {
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: #FFFFFF;
+    }
+
+    .material-large-preview {
+      position: relative;
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      border: 1px solid var(--border-dark);
+      height: 480px;
+    }
+
+    @media (max-width: 768px) {
+      .material-large-preview {
+        height: 320px;
+      }
+    }
+
+    .material-large-preview img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: opacity 0.4s ease;
+    }
+
+    /* ==========================================================================
+       SECTION: THE 4-PHASE ATELIER JOURNEY (PROCESS TIMELINE)
+       ========================================================================== */
+    .process-section {
+      padding: 6.5rem 0;
+      background-color: var(--bg-cream);
+    }
+
+    .timeline-steps-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+      margin-top: 4rem;
+      position: relative;
+    }
+
+    @media (max-width: 992px) {
+      .timeline-steps-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .timeline-steps-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .step-card {
+      background: #FFFFFF;
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-sm);
+      padding: 2.2rem 1.8rem;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.3s ease;
+    }
+
+    .step-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--accent-terracotta);
+    }
+
+    .step-number-badge {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--accent-terracotta);
+      margin-bottom: 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .step-icon-svg {
+      width: 28px;
+      height: 28px;
+      color: var(--text-primary);
+    }
+
+    .step-title {
+      font-size: 1.25rem;
+      color: var(--text-primary);
+      margin-bottom: 0.8rem;
+      line-height: 1.3;
+    }
+
+    .step-desc {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 1.4rem;
+    }
+
+    .step-deliverables-pill {
+      font-size: 0.75rem;
+      font-weight: 600;
+      background: var(--bg-alabaster);
+      color: var(--text-primary);
+      padding: 0.4rem 0.8rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-light);
+    }
+
+    /* ==========================================================================
+       SECTION: EDITORIAL TESTIMONIALS & CASE STUDIES
+       ========================================================================== */
+    .testimonials-section {
+      padding: 6.5rem 0;
+      background-color: var(--bg-alabaster);
+    }
+
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2.5rem;
+      margin-top: 3.5rem;
+    }
+
+    @media (max-width: 992px) {
+      .testimonials-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .testi-card {
+      background: #FFFFFF;
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-sm);
+      padding: 2.5rem 2.2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 10px 30px rgba(17, 19, 21, 0.03);
+    }
+
+    .testi-quote-mark {
+      font-family: var(--font-serif);
+      font-size: 3.5rem;
+      color: var(--accent-terracotta);
+      line-height: 1;
+      margin-bottom: -1rem;
+    }
+
+    .testi-text {
+      font-size: 1rem;
+      line-height: 1.7;
+      color: var(--text-primary);
+      margin-bottom: 2rem;
+      font-style: italic;
+    }
+
+    .testi-author-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--border-light);
+    }
+
+    .testi-avatar {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--accent-brass);
+    }
+
+    .testi-author-name {
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--text-primary);
+    }
+
+    .testi-author-loc {
+      font-size: 0.78rem;
+      color: var(--accent-terracotta);
+      font-weight: 600;
+    }
+
+    .testi-appraisal-badge {
+      display: inline-block;
+      margin-top: 0.25rem;
+      font-size: 0.74rem;
+      background: #EEF8F1;
+      color: #198754;
+      font-weight: 700;
+      padding: 0.15rem 0.5rem;
+      border-radius: var(--radius-sm);
+    }
+
+    /* ==========================================================================
+       SECTION: BESPOKE CONSULTATION BOOKING SUITE
+       ========================================================================== */
+    .consultation-section {
+      padding: 6.5rem 0;
+      background-color: var(--bg-obsidian);
+      color: var(--text-inverse);
+      position: relative;
+    }
+
+    .booking-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 4.5rem;
+      align-items: start;
+    }
+
+    @media (max-width: 992px) {
+      .booking-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .booking-form-box {
+      background: var(--bg-charcoal);
+      border: 1px solid var(--border-dark);
+      border-radius: var(--radius-sm);
+      padding: 3rem 2.8rem;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    }
+
+    @media (max-width: 600px) {
+      .booking-form-box {
+        padding: 2rem 1.5rem;
+      }
+    }
+
+    .form-group-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.2rem;
+      margin-bottom: 1.2rem;
+    }
+
+    @media (max-width: 600px) {
+      .form-group-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .form-group {
+      margin-bottom: 1.2rem;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent-brass-light);
+      margin-bottom: 0.5rem;
+    }
+
+    .form-control {
+      width: 100%;
+      background: rgba(15, 17, 19, 0.8);
+      border: 1px solid var(--border-dark);
+      padding: 0.85rem 1.1rem;
+      border-radius: var(--radius-sm);
+      color: #FFFFFF;
+      font-size: 0.92rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .form-control:focus {
+      border-color: var(--accent-terracotta);
+    }
+
+    select.form-control option {
+      background: var(--bg-obsidian);
+      color: #fff;
+    }
+
+    .booking-perks-list {
+      list-style: none;
+      margin-top: 2rem;
+    }
+
+    .booking-perk-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.9rem;
+      margin-bottom: 1.4rem;
+    }
+
+    .booking-perk-icon {
+      width: 22px;
+      height: 22px;
+      color: var(--accent-terracotta);
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .booking-perk-title {
+      font-weight: 700;
+      font-size: 0.92rem;
+      color: #fff;
+      margin-bottom: 0.2rem;
+    }
+
+    .booking-perk-desc {
+      font-size: 0.82rem;
+      color: var(--text-light-muted);
+      line-height: 1.45;
+    }
+
+    /* Modal for Project Detail */
+    .project-modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(12px);
+      z-index: 1200;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .project-modal-backdrop.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .project-modal-dialog {
+      background: var(--bg-obsidian);
+      color: #fff;
+      border: 1px solid var(--border-dark);
+      border-radius: var(--radius-sm);
+      max-width: 960px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+      padding: 3rem;
+      box-shadow: 0 30px 90px rgba(0,0,0,0.8);
+      transform: scale(0.95);
+      transition: transform 0.3s var(--ease-out);
+    }
+
+    @media (max-width: 768px) {
+      .project-modal-dialog {
+        padding: 2rem 1.5rem;
+      }
+    }
+
+    .project-modal-backdrop.active .project-modal-dialog {
+      transform: scale(1);
+    }
+
+    .modal-close-btn {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      background: var(--bg-charcoal);
+      border: 1px solid var(--border-dark);
+      color: #fff;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .modal-close-btn:hover {
+      background: var(--accent-terracotta);
+    }
+
+    /* ==========================================================================
+       FOOTER & MASTHEAD
+       ========================================================================== */
+    .site-footer {
+      background-color: var(--bg-obsidian);
+      color: var(--text-inverse);
+      padding: 5.5rem 0 2.5rem 0;
+      border-top: 1px solid var(--border-dark);
+    }
+
+    .footer-top-grid {
+      display: grid;
+      grid-template-columns: 1.6fr 1fr 1fr 1.2fr;
+      gap: 3.5rem;
+      margin-bottom: 4.5rem;
+    }
+
+    @media (max-width: 992px) {
+      .footer-top-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .footer-top-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .footer-col-title {
+      font-family: var(--font-display);
+      font-size: 0.8rem;
+      letter-spacing: 0.15em;
+      color: var(--accent-brass-light);
+      margin-bottom: 1.4rem;
+      text-transform: uppercase;
+    }
+
+    .footer-links-list {
+      list-style: none;
+    }
+
+    .footer-links-list li {
+      margin-bottom: 0.75rem;
+    }
+
+    .footer-link-item {
+      font-size: 0.88rem;
+      color: var(--text-light-muted);
+      transition: color 0.2s;
+    }
+
+    .footer-link-item:hover {
+      color: var(--accent-terracotta);
+    }
+
+    .city-studios-list {
+      list-style: none;
+    }
+    .city-studio-item {
+      margin-bottom: 1rem;
+      font-size: 0.86rem;
+    }
+    .city-name {
+      font-weight: 700;
+      color: #fff;
+    }
+    .city-address {
+      color: var(--text-light-muted);
+      font-size: 0.78rem;
+    }
+
+    .newsletter-form {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .newsletter-input {
+      background: var(--bg-charcoal);
+      border: 1px solid var(--border-dark);
+      padding: 0.75rem 1rem;
+      border-radius: var(--radius-sm);
+      color: #fff;
+      font-size: 0.85rem;
+      flex-grow: 1;
+      outline: none;
+    }
+
+    .newsletter-input:focus {
+      border-color: var(--accent-terracotta);
+    }
+
+    .footer-bottom-bar {
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding-top: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.78rem;
+      color: var(--text-light-muted);
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    /* Toast Notification */
+    .toast-notice {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: var(--accent-terracotta);
+      color: #fff;
+      padding: 1rem 1.8rem;
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+      font-size: 0.88rem;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      z-index: 2000;
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.35s var(--ease-out);
+    }
+    .toast-notice.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  </style>
+</head>
+<body class="blueprint-grid-subtle">
+
+  <!-- ==========================================================================
+       TOP AVAILABILITY & DIRECT LINE STRIP
+       ========================================================================== -->
+  <div class="top-status-bar">
+    <div class="container" style="display: flex; justify-content: space-between; align-items: center;">
+      <div style="display: flex; align-items: center; gap: 0.65rem;">
+        <span class="status-pulse"></span>
+        <span>STUDIO STATUS: <strong>COMMISSIONING Q3/Q4 RESIDENTIAL PROJECTS</strong></span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 1.8rem;">
+        <a href="tel:+18005558284" style="color: var(--accent-brass-light); font-weight: 600; text-decoration: none;">DIRECT LINE: +1 (800) 555-VAULT</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       MAIN NAVIGATION
+       ========================================================================== -->
+  <nav class="main-nav" id="mainNav">
+    <div class="container nav-container">
+      <!-- Logo -->
+      <a href="#hero" class="brand-logo" aria-label="Atelier Vanguard Homepage">
+        <div class="brand-symbol">AV</div>
+        <div class="brand-text">
+          <span class="brand-name">ATELIER VANGUARD</span>
+          <span class="brand-sub">ARCHITECTURAL REMODELLING</span>
+        </div>
+      </a>
+
+      <!-- Desktop Links -->
+      <ul class="nav-links">
+        <li><a href="#transformations" class="nav-link">TRANSFORMATIONS</a></li>
+        <li><a href="#disciplines" class="nav-link">DISCIPLINES</a></li>
+        <li><a href="#portfolio" class="nav-link">CURATED WORKS</a></li>
+        <li><a href="#estimator" class="nav-link">SCOPE ESTIMATOR</a></li>
+        <li><a href="#materials" class="nav-link">MATERIAL ATELIER</a></li>
+        <li><a href="#process" class="nav-link">THE PROCESS</a></li>
+      </ul>
+
+      <!-- Nav CTA -->
+      <div class="nav-actions">
+        <a href="#consultation" class="btn-primary magnetic-btn" style="padding: 0.75rem 1.4rem; font-size: 0.8rem;">
+          <span>FEASIBILITY INQUIRY</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <button class="mobile-menu-btn" id="mobileMenuToggle" aria-label="Open Mobile Menu">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Drawer -->
+  <div class="drawer-overlay" id="drawerOverlay"></div>
+  <div class="mobile-drawer" id="mobileDrawer">
+    <div>
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3rem;">
+        <div class="brand-logo">
+          <div class="brand-symbol">AV</div>
+          <div class="brand-text">
+            <span class="brand-name" style="color: #fff;">ATELIER VANGUARD</span>
+            <span class="brand-sub">EST. 2011</span>
+          </div>
+        </div>
+        <button id="closeDrawerBtn" style="background: none; border: none; color: #fff; cursor: pointer;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <ul style="list-style: none; display: flex; flex-direction: column; gap: 1.5rem;">
+        <li><a href="#transformations" class="drawer-nav-link" style="font-size: 1.2rem; font-weight: 600;">Transformations</a></li>
+        <li><a href="#disciplines" class="drawer-nav-link" style="font-size: 1.2rem; font-weight: 600;">Disciplines</a></li>
+        <li><a href="#portfolio" class="drawer-nav-link" style="font-size: 1.2rem; font-weight: 600;">Curated Works</a></li>
+        <li><a href="#estimator" class="drawer-nav-link" style="font-size: 1.2rem; font-weight: 600;">Scope Estimator</a></li>
+        <li><a href="#materials" class="drawer-nav-link" style="font-size: 1.2rem; font-weight: 600;">Material Atelier</a></li>
+        <li><a href="#process" class="drawer-nav-link" style="font-size: 1.2rem; font-weight: 600;">The Process</a></li>
+      </ul>
+    </div>
+    <div>
+      <a href="#consultation" class="btn-primary drawer-nav-link" style="width: 100%; text-align: center; justify-content: center;">
+        <span>Book Consultation</span>
+      </a>
+      <p style="margin-top: 1rem; font-size: 0.78rem; color: var(--text-light-muted); text-align: center;">Direct Line: +1 (800) 555-VAULT</p>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       HERO SECTION — ASYMMETRIC ARCHITECTURAL SPLIT
+       ========================================================================== -->
+  <section class="hero-section" id="hero">
+    <div class="container">
+      <div class="hero-grid">
+        <!-- Content Column -->
+        <div class="hero-content">
+          <div class="hero-eyebrow">
+            <span class="arch-tag">ARCHITECTURAL DESIGN-BUILD & RENOVATION</span>
+          </div>
+
+          <h1 class="hero-title heading-display">
+            <span class="mask-wrap"><span class="line">Transforming Spaces</span></span>
+            <span class="mask-wrap"><span class="line">Into <em>Living Masterpieces.</em></span></span>
+          </h1>
+
+          <p class="hero-description hero-fade-item">
+            We engineer bespoke architectural renovations for extraordinary homes. Combining structural daring, museum-grade joinery, and rare natural stone into uncompromised living environments.
+          </p>
+
+          <div class="hero-cta-cluster hero-fade-item">
+            <a href="#consultation" class="btn-primary magnetic-btn">
+              <span>Request Feasibility Study</span>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+            <a href="#transformations" class="btn-secondary">
+              <span>View Before / After</span>
+            </a>
+          </div>
+
+          <!-- Small Coordinate Legend -->
+          <div class="hero-fade-item" style="display: flex; gap: 2rem; font-size: 0.75rem; color: var(--text-muted); border-top: 1px solid var(--border-light); padding-top: 1.2rem;">
+            <div><strong>ESTABLISHED:</strong> 2011 · SOHO, NY</div>
+            <div><strong>STRUCTURAL LICENSING:</strong> AIA & GC MASTER GUILD</div>
+          </div>
+        </div>
+
+        <!-- Media Column -->
+        <div class="hero-media-wrapper hero-fade-media">
+          <div class="floating-dimension-tag">ELEVATION 01 · LEVEL 4 ATRIUM</div>
+          <div class="hero-media-frame">
+            <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=85" alt="Bespoke luxury architectural home remodel featuring continuous travertine island and fluted walnut joinery" />
+            
+            <div class="blueprint-badge">
+              <div class="blueprint-badge-title">FEATURED COMMISSON — THE TRIBECA LOFT</div>
+              <div class="blueprint-badge-text">5,200 sq ft Gut Remodel · Honed Romano Travertine & Fluted American Walnut</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       TRUST METRICS TICKER STRIP
+       ========================================================================== -->
+  <section class="metric-ticker-strip">
+    <div class="container">
+      <div class="metric-grid">
+        <div class="metric-item">
+          <div class="metric-val">180<span>+</span></div>
+          <div class="metric-label">Completed Bespoke Remodels</div>
+        </div>
+        <div class="metric-item">
+          <div class="metric-val">$140<span>M+</span></div>
+          <div class="metric-label">Added Real Estate Equity</div>
+        </div>
+        <div class="metric-item">
+          <div class="metric-val">100<span>%</span></div>
+          <div class="metric-label">On-Time Handover Guarantee</div>
+        </div>
+        <div class="metric-item">
+          <div class="metric-val">15<span>Yr</span></div>
+          <div class="metric-label">Comprehensive Structural Warranty</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       SECTION: INTERACTIVE BEFORE & AFTER TRANSFORMATION SUITE
+       ========================================================================== -->
+  <section class="transformation-section blueprint-grid-dark" id="transformations">
+    <div class="container">
+      <div class="section-header-centered reveal-item">
+        <span class="arch-tag arch-tag-light">DYNAMIC SPATIAL COMPARISON</span>
+        <h2 class="section-title-light heading-display">The Anatomy of a Transformation</h2>
+        <p class="section-desc-light">
+          Slide across to inspect the transition from raw structural demolition into a meticulously detailed architectural sanctuary. Click hotspots for engineering decisions.
+        </p>
+      </div>
+
+      <!-- Room Selection Tabs -->
+      <div class="scenario-tabs reveal-item">
+        <button class="scenario-btn active" data-scenario="kitchen">Chef's Atrium & Kitchen</button>
+        <button class="scenario-btn" data-scenario="bath">Master Spa Sanctuary</button>
+        <button class="scenario-btn" data-scenario="living">Great Room & Cantilever</button>
+      </div>
+
+      <!-- Before & After Interactive Element -->
+      <div class="before-after-wrapper reveal-item" id="baContainer">
+        <!-- Badges -->
+        <span class="ba-badge-label ba-before-badge">BEFORE · RAW DEMO & FRAMING</span>
+        <span class="ba-badge-label ba-after-badge">AFTER · ATELIER VANGUARD COMPLETION</span>
+
+        <!-- After Image Layer -->
+        <div class="ba-layer ba-after-layer">
+          <img id="baAfterImg" src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1600&q=85" alt="Completed luxury kitchen architectural remodel" />
+        </div>
+
+        <!-- Before Image Layer (Clipped) -->
+        <div class="ba-layer ba-before-layer" id="baBeforeClip">
+          <img id="baBeforeImg" src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1600&q=85" alt="Before demolition and framing of home renovation" />
+        </div>
+
+        <!-- Drag Handle -->
+        <div class="ba-handle" id="baHandle">
+          <div class="ba-handle-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5"/></svg>
+          </div>
+        </div>
+
+        <!-- Interactive Hotspots -->
+        <div class="ba-hotspot" style="top: 38%; left: 62%;" data-title="Structural Steel Flitch Beam" data-desc="Removed 28ft load-bearing masonry wall and recessed a structural W12x50 steel beam into ceiling cavity to achieve pillar-free open span.">
+          <div class="hotspot-pulse"><div class="hotspot-dot"></div></div>
+          <div class="hotspot-card">
+            <div class="hotspot-card-title">STRUCTURAL MODIFICATION</div>
+            <div class="hotspot-card-desc">Removed 28ft load-bearing wall; integrated flush steel beam for unobstructed sightlines.</div>
+          </div>
+        </div>
+
+        <div class="ba-hotspot" style="top: 68%; left: 78%;" data-title="Monolithic Romano Travertine Island" data-desc="Custom 14-foot waterfall island carved from single quarry block with mitred zero-seam edge details and integrated induction cooking.">
+          <div class="hotspot-pulse"><div class="hotspot-dot"></div></div>
+          <div class="hotspot-card">
+            <div class="hotspot-card-title">MATERIAL CRAFT</div>
+            <div class="hotspot-card-desc">14ft continuous Honed Travertine island with concealed induction & push-to-open fluted drawers.</div>
+          </div>
+        </div>
+
+        <div class="ba-hotspot" style="top: 25%; left: 85%;" data-title="Acoustic Fluted Walnut Millwork" data-desc="Concealed refrigeration and pantry behind custom rift-sawn American walnut acoustic slats with integrated ambient cove illumination.">
+          <div class="hotspot-pulse"><div class="hotspot-dot"></div></div>
+          <div class="hotspot-card">
+            <div class="hotspot-card-title">BESPOKE JOINERY</div>
+            <div class="hotspot-card-desc">Full-height fluted walnut facade concealing Gaggenau cooling columns and hidden sommelier pantry.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Transformation Specs Bar -->
+      <div class="trans-specs-bar reveal-item">
+        <div class="trans-spec-card">
+          <div class="trans-spec-title">PROJECT TIMEFRAME</div>
+          <div class="trans-spec-val" id="transTime">14 Weeks Execution</div>
+        </div>
+        <div class="trans-spec-card">
+          <div class="trans-spec-title">STRUCTURAL RECONFIGURATION</div>
+          <div class="trans-spec-val" id="transScope">3 Wall Removals & Floor Recess</div>
+        </div>
+        <div class="trans-spec-card">
+          <div class="trans-spec-title">PROPERTY EQUITY INCREASE</div>
+          <div class="trans-spec-val" id="transEquity">+48% Appraised Valuation</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       SECTION: DISCIPLINES / SPACES WE TRANSFORM (OFFSET EDITORIAL)
+       ========================================================================== */
+  -->
+  <section class="disciplines-section" id="disciplines">
+    <div class="container">
+      <div style="max-width: 680px; margin-bottom: 5rem;">
+        <span class="arch-tag">AREAS OF SPECIALIZATION</span>
+        <h2 class="heading-display" style="font-size: clamp(2.2rem, 3.8vw, 3.2rem); margin-top: 0.75rem; margin-bottom: 1rem;">
+          Disciplined Craft Across Every Residential Dimension
+        </h2>
+        <p style="color: var(--text-muted); font-size: 1.05rem;">
+          We don't do surface cosmetics. We re-engineer spaces from their structural core, creating harmony between human habit, natural illumination, and tactile finishes.
+        </p>
+      </div>
+
+      <!-- Discipline 01: Whole-Home Structural Reconfiguration -->
+      <div class="discipline-row reveal-section">
+        <div class="discipline-content reveal-item">
+          <div class="discipline-number">01</div>
+          <h3 class="discipline-title heading-display">Whole-Home Structural Transformations</h3>
+          <p class="discipline-desc">
+            Complete gut reconfiguration of luxury townhouses, lofts, and historic estates. We rethink circulation paths, heighten ceilings, introduce dramatic vertical lightwells, and eliminate obsolete structural compartmentalization.
+          </p>
+          <ul class="discipline-features">
+            <li class="discipline-feature-item">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+              Load-bearing steel integration
+            </li>
+            <li class="discipline-feature-item">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+              Multi-floor atrium skylights
+            </li>
+            <li class="discipline-feature-item">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+              Acoustic floor decoupling
+            </li>
+            <li class="discipline-feature-item">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+              Sub-slab radiant hydronics
+            </li>
+          </ul>
+          <a href="#estimator" class="btn-secondary" style="padding: 0.8rem 1.6rem; font-size: 0.82rem;">
+            <span>Configure Estate Scope</span>
+          </a>
+        </div>
+        <div class="discipline-media reveal-item">
+          <div class="discipline-media-frame">
+            <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1200&q=85" alt="Whole-home structural architectural renovation" />
+            <span class="discipline-pill">HISTORIC TOWNHOUSE RECONFIGURATION</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Discipline 02: Culinary Atriums & Chef's Kitchens -->
+      <div class="discipline-row reversed reveal-section">
+        <div class="discipline-content reveal-item">
+          <div class="discipline-number">02</div>
+          <h3 class="discipline-title heading-display">Architectural Chef's Kitchens & Living Atriums</h3>
+          <p class="discipline-desc">
+            The epicenter of the modern home, engineered for seamless hospitality. Featuring monumental bookmatched marble islands, concealed sommelier wine suites, bespoke brass range hoods, and silent zero-exhaust ventilation systems.
+          </p>
+          <ul class="discipline-features">
+            <li class="discipline-feature-item">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+              Integrated Gaggenau / La Cornue
+            </li>
+            <li class="discipline-feature-item">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+              Zero-reveal pocket doors
+            </li>
+            <li class="discipline-feature-item">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+              Motorized touch cabinetry
+            </li>
+            <li class="discipline-feature-item">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+              Water purification hubs
+            </li>
+          </ul>
+          <a href="#estimator" class="btn-secondary" style="padding: 0.8rem 1.6rem; font-size: 0.82rem;">
+            <span>Configure Culinary Scope</span>
+          </a>
+        </div>
+        <div class="discipline-media reveal-item">
+          <div class="discipline-media-frame">
+            <img src="https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=1200&q=85" alt="Chef's luxury architectural kitchen renovation" />
+            <span class="discipline-pill">CULINARY & LIVING ARCHITECTURE</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Discipline 03: Master Sanctuaries & Spa Wellness -->
+      <div class="discipline-row reveal-section">
+        <div class="discipline-content reveal-item">
+          <div class="discipline-number">03</div>
+          <h3 class="discipline-title heading-display">Master Spa Sanctuaries & Wellness Baths</h3>
+          <p class="discipline-desc">
+            Transforming conventional master baths into private resort-level recovery sanctuaries. Featuring floor-to-ceiling bookmatched Calacatta marble, freestanding carved stone soaking tubs, steam showers with chromotherapy, and concealed dressing suites.
+          </p>
+          <ul class="discipline-features">
+            <li class="discipline-feature-item">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+              Dual-zone steam & aromatherapy
+            </li>
+            <li class="discipline-feature-item">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+              Heated slab bench seating
+            </li>
+            <li class="discipline-feature-item">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+              Zero-threshold infinity drains
+            </li>
+            <li class="discipline-feature-item">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+              Smart anti-fog thermal glass
+            </li>
+          </ul>
+          <a href="#estimator" class="btn-secondary" style="padding: 0.8rem 1.6rem; font-size: 0.82rem;">
+            <span>Configure Sanctuary Scope</span>
+          </a>
+        </div>
+        <div class="discipline-media reveal-item">
+          <div class="discipline-media-frame">
+            <img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=1200&q=85" alt="Master bathroom spa architectural renovation" />
+            <span class="discipline-pill">WELLNESS & SPA ARCHITECTURE</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Discipline 04: Bespoke Millwork & Indoor-Outdoor Pavilions -->
+      <div class="discipline-row reversed reveal-section">
+        <div class="discipline-content reveal-item">
+          <div class="discipline-number">04</div>
+          <h3 class="discipline-title heading-display">Indoor-Outdoor Living Pavilions & Joinery</h3>
+          <p class="discipline-desc">
+            Seamless dissolution of interior boundaries with motorized flush-threshold sliding glass walls, cantilevered outdoor dining pavilions, climate-controlled wine cellars, and handcrafted architectural millwork.
+          </p>
+          <ul class="discipline-features">
+            <li class="discipline-feature-item">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+              Sky-Frame glass pocket doors
+            </li>
+            <li class="discipline-feature-item">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+              Bespoke rift-cut timber joinery
+            </li>
+            <li class="discipline-feature-item">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+              Automated louvred roof systems
+            </li>
+            <li class="discipline-feature-item">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+              Integrated landscape lighting
+            </li>
+          </ul>
+          <a href="#estimator" class="btn-secondary" style="padding: 0.8rem 1.6rem; font-size: 0.82rem;">
+            <span>Configure Pavilion Scope</span>
+          </a>
+        </div>
+        <div class="discipline-media reveal-item">
+          <div class="discipline-media-frame">
+            <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=85" alt="Indoor outdoor living pavilion remodel" />
+            <span class="discipline-pill">TERRACE & PAVILION ARCHITECTURE</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       SECTION: INTERACTIVE REMODEL SCOPE & INVESTMENT ESTIMATOR
+       ========================================================================== -->
+  <section class="estimator-section" id="estimator">
+    <div class="container">
+      <div style="text-align: center; max-width: 740px; margin: 0 auto 3.5rem auto;">
+        <span class="arch-tag">FEASIBILITY & INVESTMENT TOOL</span>
+        <h2 class="heading-display" style="font-size: clamp(2.2rem, 3.8vw, 3.2rem); margin-top: 0.75rem; margin-bottom: 1rem;">
+          Interactive Scope & Investment Estimator
+        </h2>
+        <p style="color: var(--text-muted); font-size: 1.05rem;">
+          Configure your residence's scope, desired material caliber, and spatial dimensions for an immediate architectural investment bracket and timeline forecast.
+        </p>
+      </div>
+
+      <div class="estimator-card reveal-section">
+        <!-- Configuration Controls -->
+        <div class="estimator-inputs reveal-item">
+          <!-- Step 1: Space Type -->
+          <div class="estimator-step-title">
+            <span class="step-num">1</span>
+            <span>Select Target Remodel Scope</span>
+          </div>
+          <div class="rooms-selector-grid">
+            <label class="room-opt-label">
+              <input type="radio" name="remodelSpace" value="kitchen" checked />
+              <div class="room-opt-box">Chef's Kitchen & Dining</div>
+            </label>
+            <label class="room-opt-label">
+              <input type="radio" name="remodelSpace" value="bath" />
+              <div class="room-opt-box">Master Spa Suite</div>
+            </label>
+            <label class="room-opt-label">
+              <input type="radio" name="remodelSpace" value="floor" />
+              <div class="room-opt-box">Full Floor Remodel</div>
+            </label>
+            <label class="room-opt-label">
+              <input type="radio" name="remodelSpace" value="whole" />
+              <div class="room-opt-box">Whole Estate / Loft</div>
+            </label>
+            <label class="room-opt-label">
+              <input type="radio" name="remodelSpace" value="historic" />
+              <div class="room-opt-box">Historic Restoration</div>
+            </label>
+            <label class="room-opt-label">
+              <input type="radio" name="remodelSpace" value="pavilion" />
+              <div class="room-opt-box">Pavilion & Exterior</div>
+            </label>
+          </div>
+
+          <!-- Step 2: Caliber / Finish Tier -->
+          <div class="estimator-step-title">
+            <span class="step-num">2</span>
+            <span>Select Architectural Caliber</span>
+          </div>
+          <div class="tier-selector-group">
+            <label class="tier-opt-label">
+              <input type="radio" name="finishTier" value="signature" checked />
+              <div class="tier-opt-box">
+                <div class="tier-opt-name">Signature Craft</div>
+                <div class="tier-opt-desc">Custom oak millwork, quartzite slabs, sub-zero refrigeration, architectural fixtures.</div>
+              </div>
+            </label>
+            <label class="tier-opt-label">
+              <input type="radio" name="finishTier" value="bespoke" />
+              <div class="tier-opt-box">
+                <div class="tier-opt-name">Atelier Bespoke</div>
+                <div class="tier-opt-desc">Bookmatched Italian marble, Gaggenau 400 series, concealed doors, smart lighting.</div>
+              </div>
+            </label>
+            <label class="tier-opt-label">
+              <input type="radio" name="finishTier" value="masterpiece" />
+              <div class="tier-opt-box">
+                <div class="tier-opt-name">Heritage Masterpiece</div>
+                <div class="tier-opt-desc">Full structural steel reconfiguration, rare Romano travertine, museum-grade acoustic joinery.</div>
+              </div>
+            </label>
+          </div>
+
+          <!-- Step 3: Square Footage Slider -->
+          <div class="estimator-step-title">
+            <span class="step-num">3</span>
+            <span>Estimated Area Dimension</span>
+          </div>
+          <div class="slider-container">
+            <div class="slider-header">
+              <span style="font-size: 0.88rem; color: var(--text-muted);">Residence Footprint:</span>
+              <span class="slider-val-display" id="sqftDisplay">1,200 SQ FT</span>
+            </div>
+            <input type="range" class="sqft-slider" id="sqftSlider" min="400" max="6000" step="50" value="1200" />
+            <div style="display: flex; justify-content: space-between; font-size: 0.72rem; color: var(--text-muted); margin-top: 0.4rem;">
+              <span>400 SQ FT</span>
+              <span>3,000 SQ FT</span>
+              <span>6,000+ SQ FT</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Real-Time Calculation Output -->
+        <div class="estimator-output reveal-item">
+          <div>
+            <div class="output-eyebrow">ESTIMATED ARCHITECTURAL INVESTMENT</div>
+            <div class="output-price-range" id="priceRangeOutput">$165,000 – $220,000</div>
+            <div class="output-price-note">*All-inclusive turnkey estimate including design, structural engineering, permits, and white-glove guild execution.</div>
+
+            <ul class="output-metrics-list">
+              <li class="output-metric-row">
+                <span class="metric-k">Projected Timeline:</span>
+                <span class="metric-v" id="calcTimeline">10 – 14 Weeks</span>
+              </li>
+              <li class="output-metric-row">
+                <span class="metric-k">Permitting & Engineering:</span>
+                <span class="metric-v" id="calcPermits">3 – 5 Weeks (Handled by Vanguard)</span>
+              </li>
+              <li class="output-metric-row">
+                <span class="metric-k">Dedicated Guild Foreman:</span>
+                <span class="metric-v">Full-Time On-Site</span>
+              </li>
+              <li class="output-metric-row">
+                <span class="metric-k">Warranty Coverage:</span>
+                <span class="metric-v">15-Year Structural / 5-Year Finishes</span>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <button class="btn-primary magnetic-btn" id="applyEstimateBtn" style="width: 100%; justify-content: center; background: var(--accent-terracotta); border-color: var(--accent-terracotta);">
+              <span>Apply Estimate To Feasibility Consultation</span>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+            <p style="font-size: 0.72rem; color: var(--text-light-muted); text-align: center; margin-top: 0.8rem;">
+              No obligation · Confidential architectural feasibility assessment
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       SECTION: CURATED WORKS / ARCHITECTURAL PORTFOLIO
+       ========================================================================== -->
+  <section class="portfolio-section" id="portfolio">
+    <div class="container">
+      <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 3.5rem; flex-wrap: wrap; gap: 1.5rem;">
+        <div>
+          <span class="arch-tag">SELECTED COMMISSIONS</span>
+          <h2 class="heading-display" style="font-size: clamp(2.2rem, 3.8vw, 3.2rem); margin-top: 0.75rem;">
+            Curated Architectural Works
+          </h2>
+        </div>
+        <p style="color: var(--text-muted); max-width: 440px; font-size: 0.95rem;">
+          Each commission represents a unique spatial dialogue between existing structural constraints and the client's aspirational lifestyle.
+        </p>
+      </div>
+
+      <!-- Filter Tabs -->
+      <div class="portfolio-filter-bar">
+        <button class="filter-tab-btn active" data-filter="all">All Commissions (6)</button>
+        <button class="filter-tab-btn" data-filter="whole">Whole Residence</button>
+        <button class="filter-tab-btn" data-filter="kitchen">Chef's Atriums</button>
+        <button class="filter-tab-btn" data-filter="bath">Sanctuary Baths</button>
+        <button class="filter-tab-btn" data-filter="historic">Historic Renovations</button>
+      </div>
+
+      <!-- Projects Grid -->
+      <div class="portfolio-grid" id="portfolioGrid">
+        <!-- Project 1 -->
+        <div class="project-card reveal-item" data-category="whole historic" data-project-id="1">
+          <div class="project-media-wrap">
+            <img src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1200&q=85" alt="Tribeca Cast-Iron Loft architectural remodel" />
+            <span class="project-badge-tag">TRIBECA, NY</span>
+          </div>
+          <div class="project-body">
+            <div>
+              <div class="project-meta-row">
+                <span>5,200 SQ FT · GUT RENOVATION</span>
+                <span>16 WEEKS</span>
+              </div>
+              <h3 class="project-title heading-display">The Tribeca Cast-Iron Loft</h3>
+              <p class="project-summary">Complete restoration of an 1890 industrial warehouse into an open-plan light sanctuary with monolithic travertine dividers.</p>
+            </div>
+            <div class="project-footer-specs">
+              <span>Materials: French Oak, Basalt</span>
+              <span class="project-action-link">Inspect Specs &rarr;</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 2 -->
+        <div class="project-card reveal-item" data-category="whole" data-project-id="2">
+          <div class="project-media-wrap">
+            <img src="https://images.unsplash.com/photo-1600565193348-f74bd3c7ccdf?auto=format&fit=crop&w=1200&q=85" alt="Bel Air Mid-Century Pavilion renovation" />
+            <span class="project-badge-tag">BEL AIR, CA</span>
+          </div>
+          <div class="project-body">
+            <div>
+              <div class="project-meta-row">
+                <span>6,800 SQ FT · CANTILEVERED EXTENSION</span>
+                <span>20 WEEKS</span>
+              </div>
+              <h3 class="project-title heading-display">The Bel Air Modern Pavilion</h3>
+              <p class="project-summary">Integration of floor-to-ceiling pocketing thermal glass walls with cantilevered teak decking and custom limestone hearth.</p>
+            </div>
+            <div class="project-footer-specs">
+              <span>Materials: Roman Plaster, Teak</span>
+              <span class="project-action-link">Inspect Specs &rarr;</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 3 -->
+        <div class="project-card reveal-item" data-category="kitchen" data-project-id="3">
+          <div class="project-media-wrap">
+            <img src="https://images.unsplash.com/photo-1600585152220-90363fe7e115?auto=format&fit=crop&w=1200&q=85" alt="Greenwich Estate Culinary Atrium" />
+            <span class="project-badge-tag">GREENWICH, CT</span>
+          </div>
+          <div class="project-body">
+            <div>
+              <div class="project-meta-row">
+                <span>1,400 SQ FT · CHEF'S ATRIUM</span>
+                <span>12 WEEKS</span>
+              </div>
+              <h3 class="project-title heading-display">The Greenwich Culinary Atrium</h3>
+              <p class="project-summary">Double-height glass conservatory kitchen featuring 16ft Calacatta Viola island and custom burnished brass cabinetry.</p>
+            </div>
+            <div class="project-footer-specs">
+              <span>Materials: Calacatta Viola, Brass</span>
+              <span class="project-action-link">Inspect Specs &rarr;</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 4 -->
+        <div class="project-card reveal-item" data-category="historic whole" data-project-id="4">
+          <div class="project-media-wrap">
+            <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1200&q=85" alt="Mayfair Heritage Townhouse renovation" />
+            <span class="project-badge-tag">MAYFAIR, LONDON</span>
+          </div>
+          <div class="project-body">
+            <div>
+              <div class="project-meta-row">
+                <span>4,400 SQ FT · HERITAGE RESTORATION</span>
+                <span>18 WEEKS</span>
+              </div>
+              <h3 class="project-title heading-display">The Mayfair Georgian Townhouse</h3>
+              <p class="project-summary">Grade-II listed structural restoration combining bespoke acoustic fluted paneling with a subterranean wellness suite.</p>
+            </div>
+            <div class="project-footer-specs">
+              <span>Materials: Dark Walnut, Portland Stone</span>
+              <span class="project-action-link">Inspect Specs &rarr;</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 5 -->
+        <div class="project-card reveal-item" data-category="bath" data-project-id="5">
+          <div class="project-media-wrap">
+            <img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=1200&q=85" alt="Aspen Sanctuary Wellness Spa Bath" />
+            <span class="project-badge-tag">ASPEN, CO</span>
+          </div>
+          <div class="project-body">
+            <div>
+              <div class="project-meta-row">
+                <span>850 SQ FT · WELLNESS SANCTUARY</span>
+                <span>10 WEEKS</span>
+              </div>
+              <h3 class="project-title heading-display">The Aspen Basalt Spa Bath</h3>
+              <p class="project-summary">Hand-carved single-piece basalt soaking tub paired with a glass-enclosed dual steam sauna overlooking pine forests.</p>
+            </div>
+            <div class="project-footer-specs">
+              <span>Materials: Honed Basalt, Western Cedar</span>
+              <span class="project-action-link">Inspect Specs &rarr;</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 6 -->
+        <div class="project-card reveal-item" data-category="whole" data-project-id="6">
+          <div class="project-media-wrap">
+            <img src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=1200&q=85" alt="Pacific Palisades Coastal Villa" />
+            <span class="project-badge-tag">PACIFIC PALISADES, CA</span>
+          </div>
+          <div class="project-body">
+            <div>
+              <div class="project-meta-row">
+                <span>7,400 SQ FT · RESIDENTIAL OVERHAUL</span>
+                <span>22 WEEKS</span>
+              </div>
+              <h3 class="project-title heading-display">The Palisades Coastal Villa</h3>
+              <p class="project-summary">Radical structural opening creating a 45ft ocean-view glass facade with seamless continuous microcement flooring.</p>
+            </div>
+            <div class="project-footer-specs">
+              <span>Materials: Microcement, Fluted Oak</span>
+              <span class="project-action-link">Inspect Specs &rarr;</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       SECTION: TACTILE MATERIAL ATELIER
+       ========================================================================== -->
+  <section class="material-section blueprint-grid-dark" id="materials">
+    <div class="container">
+      <div style="text-align: center; max-width: 720px; margin: 0 auto;">
+        <span class="arch-tag arch-tag-light">PROVENANCE & TACTILITY</span>
+        <h2 class="section-title-light heading-display">The Material Atelier</h2>
+        <p class="section-desc-light">
+          We source stones, timbers, and hand-patinated metals directly from heritage quarries and European master artisans.
+        </p>
+      </div>
+
+      <div class="material-atelier-grid">
+        <!-- Interactive Swatch Selector & Details -->
+        <div>
+          <div class="swatches-strip">
+            <div class="material-swatch-card active" data-mat="travertine">
+              <img class="swatch-thumb" src="https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=400&q=80" alt="Romano Travertine" />
+              <div class="swatch-name">Travertine</div>
+            </div>
+            <div class="material-swatch-card" data-mat="walnut">
+              <img class="swatch-thumb" src="https://images.unsplash.com/photo-1546484396-fb3fc6f95f98?auto=format&fit=crop&w=400&q=80" alt="Fluted Walnut" />
+              <div class="swatch-name">French Walnut</div>
+            </div>
+            <div class="material-swatch-card" data-mat="calacatta">
+              <img class="swatch-thumb" src="https://images.unsplash.com/photo-1615529182904-14819c35db37?auto=format&fit=crop&w=400&q=80" alt="Calacatta Viola" />
+              <div class="swatch-name">Calacatta Viola</div>
+            </div>
+            <div class="material-swatch-card" data-mat="brass">
+              <img class="swatch-thumb" src="https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=400&q=80" alt="Aged Brass" />
+              <div class="swatch-name">Aged Brass</div>
+            </div>
+            <div class="material-swatch-card" data-mat="plaster">
+              <img class="swatch-thumb" src="https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&w=400&q=80" alt="Venetian Plaster" />
+              <div class="swatch-name">Roman Plaster</div>
+            </div>
+          </div>
+
+          <!-- Spec Spotlight Box -->
+          <div class="material-spotlight-display" id="matSpotlight">
+            <h3 class="mat-spec-heading heading-display" id="matName">Honed Romano Classico Travertine</h3>
+            <div class="mat-origin-tag" id="matOrigin">QUARRY ORIGIN: TIVOLI, ITALY · HISTORIC BED 04</div>
+            <p class="mat-story-p" id="matDesc">
+              Quarried from the same geological strata used in Roman antiquity. Cross-cut and honed to a tactile matte finish that feels silky underfoot while retaining organic cellular micro-cavities.
+            </p>
+            <div class="mat-tech-specs">
+              <div class="mat-tech-col">
+                <div class="k">Surface Finish</div>
+                <div class="v" id="matFinish">Velvet Honed / Unfilled</div>
+              </div>
+              <div class="mat-tech-col">
+                <div class="k">Thermal Radiance</div>
+                <div class="v" id="matThermal">Optimal for Sub-Floor</div>
+              </div>
+              <div class="mat-tech-col">
+                <div class="k">Guild Certification</div>
+                <div class="v" id="matCert">Class 1 Monolithic</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- High-Res Texture Showcase -->
+        <div class="material-large-preview">
+          <img id="matLargeImg" src="https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=1200&q=85" alt="High resolution texture specimen" />
+          <div style="position: absolute; bottom: 1.5rem; left: 1.5rem; background: rgba(15,17,19,0.85); backdrop-filter: blur(8px); padding: 0.5rem 1rem; border-left: 2px solid var(--accent-terracotta); font-size: 0.75rem;">
+            100% TRACEABLE ARTISANAL SUPPLY CHAIN
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       SECTION: THE 4-PHASE ATELIER JOURNEY (PROCESS TIMELINE)
+       ========================================================================== -->
+  <section class="process-section" id="process">
+    <div class="container">
+      <div style="text-align: center; max-width: 720px; margin: 0 auto;">
+        <span class="arch-tag">EXECUTION RIGOR</span>
+        <h2 class="heading-display" style="font-size: clamp(2.2rem, 3.8vw, 3.2rem); margin-top: 0.75rem; margin-bottom: 1rem;">
+          The 4-Phase Atelier Methodology
+        </h2>
+        <p style="color: var(--text-muted); font-size: 1.05rem;">
+          Our proven protocol eliminates remodeling delays, cost inflation, and contractor friction through unified architectural governance.
+        </p>
+      </div>
+
+      <div class="timeline-steps-grid">
+        <!-- Phase 01 -->
+        <div class="step-card reveal-item">
+          <div>
+            <div class="step-number-badge">
+              <span>PHASE 01</span>
+              <svg class="step-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>
+            </div>
+            <h3 class="step-title heading-display">Spatial Audit & 3D Photogrammetry</h3>
+            <p class="step-desc">
+              Millimeter-precise LiDAR scanning of existing structural frames, load-bearing verification, mechanical routing feasibility, and daylight path analysis.
+            </p>
+          </div>
+          <span class="step-deliverables-pill">Deliverable: 3D Digital Twin & Permit Pack</span>
+        </div>
+
+        <!-- Phase 02 -->
+        <div class="step-card reveal-item">
+          <div>
+            <div class="step-number-badge">
+              <span>PHASE 02</span>
+              <svg class="step-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+            </div>
+            <h3 class="step-title heading-display">Material Curation & Engineering</h3>
+            <p class="step-desc">
+              Direct quarry reserve tagging, structural steel calculation, custom millwork shop drawings, and complete fixed-bracket investment locking.
+            </p>
+          </div>
+          <span class="step-deliverables-pill">Deliverable: 100% Fixed-Price Commission Contract</span>
+        </div>
+
+        <!-- Phase 03 -->
+        <div class="step-card reveal-item">
+          <div>
+            <div class="step-number-badge">
+              <span>PHASE 03</span>
+              <svg class="step-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+            </div>
+            <h3 class="step-title heading-display">Guild Craft & Site Governance</h3>
+            <p class="step-desc">
+              Execution conducted strictly by our licensed master carpenters, stonemasons, and engineers under a full-time resident guild foreman.
+            </p>
+          </div>
+          <span class="step-deliverables-pill">Deliverable: Daily Client Portal Live Feeds</span>
+        </div>
+
+        <!-- Phase 04 -->
+        <div class="step-card reveal-item">
+          <div>
+            <div class="step-number-badge">
+              <span>PHASE 04</span>
+              <svg class="step-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            </div>
+            <h3 class="step-title heading-display">White-Glove Commissioning</h3>
+            <p class="step-desc">
+              Comprehensive HVAC balancing, smart home acoustic tuning, deep architectural cleaning, and issuance of the 15-year structural transferrable warranty.
+            </p>
+          </div>
+          <span class="step-deliverables-pill">Deliverable: Bespoke Owner's Manual & Warranty Deed</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       SECTION: EDITORIAL TESTIMONIALS & CASE STUDIES
+       ========================================================================== -->
+  <section class="testimonials-section">
+    <div class="container">
+      <div style="text-align: center; max-width: 680px; margin: 0 auto 3rem auto;">
+        <span class="arch-tag">CLIENT TESTIMONIALS</span>
+        <h2 class="heading-display" style="font-size: clamp(2.2rem, 3.8vw, 3.2rem); margin-top: 0.75rem;">
+          Endorsed by Discerning Property Owners
+        </h2>
+      </div>
+
+      <div class="testimonials-grid">
+        <!-- Testimonial 1 -->
+        <div class="testi-card reveal-item">
+          <div>
+            <div class="testi-quote-mark">“</div>
+            <p class="testi-text">
+              Atelier Vanguard removed two major load-bearing brick partitions in our 1890 Tribeca loft without a single millimeter of settling. The custom fluted walnut cabinetry and bookmatched travertine island are truly museum-caliber.
+            </p>
+          </div>
+          <div class="testi-author-row">
+            <img class="testi-avatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80" alt="Elena Vance" />
+            <div>
+              <div class="testi-author-name">Elena & Marcus Vance</div>
+              <div class="testi-author-loc">Tribeca Historic Loft, New York</div>
+              <span class="testi-appraisal-badge">+$2.8M Appraised Equity (+52%)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Testimonial 2 -->
+        <div class="testi-card reveal-item">
+          <div>
+            <div class="testi-quote-mark">“</div>
+            <p class="testi-text">
+              In my 25 years of luxury property investing in Bel Air, I have never seen a remodel delivered three days early and precisely on the fixed contract budget. Their architectural precision is genuinely unrivaled.
+            </p>
+          </div>
+          <div class="testi-author-row">
+            <img class="testi-avatar" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=300&q=80" alt="Jonathan Reed" />
+            <div>
+              <div class="testi-author-name">Jonathan Reed</div>
+              <div class="testi-author-loc">Bel Air Cantilever Estate, CA</div>
+              <span class="testi-appraisal-badge">+$4.1M Appraised Equity (+44%)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Testimonial 3 -->
+        <div class="testi-card reveal-item">
+          <div>
+            <div class="testi-quote-mark">“</div>
+            <p class="testi-text">
+              Remodeling a Grade-II listed Mayfair townhouse usually involves endless red tape. Vanguard navigated structural heritage approvals effortlessly and delivered a subterranean spa sanctuary beyond our imagination.
+            </p>
+          </div>
+          <div class="testi-author-row">
+            <img class="testi-avatar" src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=300&q=80" alt="Lady Claire Kensington" />
+            <div>
+              <div class="testi-author-name">Lady Claire Kensington</div>
+              <div class="testi-author-loc">Mayfair Heritage Residence, London</div>
+              <span class="testi-appraisal-badge">+£3.2M Appraised Equity (+48%)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       SECTION: BESPOKE CONSULTATION BOOKING SUITE
+       ========================================================================== -->
+  <section class="consultation-section blueprint-grid-dark" id="consultation">
+    <div class="container">
+      <div class="booking-grid">
+        <!-- Left Column: Context & Guarantees -->
+        <div>
+          <span class="arch-tag arch-tag-light">BEGIN YOUR SPATIAL COMMISSION</span>
+          <h2 class="section-title-light heading-display" style="margin-top: 0.75rem;">
+            Schedule an Architectural Feasibility Consultation
+          </h2>
+          <p class="section-desc-light" style="margin-bottom: 2.5rem;">
+            Meet with our Principal Architect and Master Guild Director. We will evaluate your property's structural potential, municipal zoning, and outline immediate aesthetic possibilities.
+          </p>
+
+          <ul class="booking-perks-list">
+            <li class="booking-perk-item">
+              <svg class="booking-perk-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 11-5.93-9.14M22 4L12 14.01l-3-3"/></svg>
+              <div>
+                <div class="booking-perk-title">Complimentary On-Site LiDAR Feasibility Scan</div>
+                <div class="booking-perk-desc">Our engineering team performs preliminary laser scanning to assess load-bearing walls and ceiling cavities.</div>
+              </div>
+            </li>
+            <li class="booking-perk-item">
+              <svg class="booking-perk-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 11-5.93-9.14M22 4L12 14.01l-3-3"/></svg>
+              <div>
+                <div class="booking-perk-title">Fixed-Price Architectural Guarantee</div>
+                <div class="booking-perk-desc">Zero change orders for documented scope. We absorb material fluctuations and engineering contingency.</div>
+              </div>
+            </li>
+            <li class="booking-perk-item">
+              <svg class="booking-perk-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 11-5.93-9.14M22 4L12 14.01l-3-3"/></svg>
+              <div>
+                <div class="booking-perk-title">Comprehensive 15-Year Transferable Warranty</div>
+                <div class="booking-perk-desc">Complete coverage on all structural modifications, waterproofing membranes, and master joinery.</div>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Right Column: Interactive Booking Form -->
+        <div class="booking-form-box" id="consultationFormContainer">
+          <form id="consultationForm">
+            <div class="form-group-row">
+              <div class="form-group">
+                <label class="form-label" for="clientName">Full Name *</label>
+                <input type="text" id="clientName" class="form-control" placeholder="e.g. Eleanor Vance" required />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="clientPhone">Telephone *</label>
+                <input type="tel" id="clientPhone" class="form-control" placeholder="+1 (555) 000-0000" required />
+              </div>
+            </div>
+
+            <div class="form-group-row">
+              <div class="form-group">
+                <label class="form-label" for="clientEmail">Email Address *</label>
+                <input type="email" id="clientEmail" class="form-control" placeholder="eleanor@domain.com" required />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="propertyCity">Property Location *</label>
+                <input type="text" id="propertyCity" class="form-control" placeholder="e.g. Tribeca, New York" required />
+              </div>
+            </div>
+
+            <div class="form-group-row">
+              <div class="form-group">
+                <label class="form-label" for="remodelType">Commission Type</label>
+                <select id="remodelType" class="form-control">
+                  <option value="Chef's Kitchen & Living">Chef's Kitchen & Living Atrium</option>
+                  <option value="Whole Residence Gut Remodel">Whole Residence Gut Remodel</option>
+                  <option value="Master Spa Sanctuary">Master Spa & Wellness Sanctuary</option>
+                  <option value="Historic Estate Restoration">Historic Estate Restoration</option>
+                  <option value="Outdoor Living Pavilion">Outdoor Living Pavilion</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="investmentTier">Investment Bracket</label>
+                <select id="investmentTier" class="form-control">
+                  <option value="$150k - $250k">$150,000 – $250,000</option>
+                  <option value="$250k - $500k">$250,000 – $500,000</option>
+                  <option value="$500k - $1M+">$500,000 – $1,000,000+</option>
+                  <option value="$1M+ Ultra-Luxury Estate">$1,000,000+ Masterpiece</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="projectVision">Spatial Vision & Architectural Notes</label>
+              <textarea id="projectVision" class="form-control" rows="3" placeholder="Describe your residence, existing layout bottlenecks, and target timeline..."></textarea>
+            </div>
+
+            <button type="submit" class="btn-primary magnetic-btn" style="width: 100%; justify-content: center; background: var(--accent-terracotta); border-color: var(--accent-terracotta); padding: 1.1rem;">
+              <span>Submit Feasibility Commission Request</span>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+            <p style="font-size: 0.72rem; color: var(--text-light-muted); text-align: center; margin-top: 0.9rem;">
+              Strict client confidentiality guaranteed. Our studio responds within 24 business hours.
+            </p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       PROJECT DETAIL MODAL (INTERACTIVE CASE STUDY)
+       ========================================================================== -->
+  <div class="project-modal-backdrop" id="projectModal">
+    <div class="project-modal-dialog">
+      <button class="modal-close-btn" id="closeModalBtn" aria-label="Close Project Modal">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+
+      <div id="modalContentContainer">
+        <!-- Injected via JavaScript -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       FOOTER & MASTHEAD
+       ========================================================================== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top-grid">
+        <!-- Col 1: Brand -->
+        <div>
+          <div class="brand-logo" style="margin-bottom: 1.2rem;">
+            <div class="brand-symbol" style="border-color: var(--accent-brass);">AV</div>
+            <div class="brand-text">
+              <span class="brand-name" style="color: #fff;">ATELIER VANGUARD</span>
+              <span class="brand-sub">ARCHITECTURAL REMODELLING</span>
+            </div>
+          </div>
+          <p style="font-size: 0.86rem; color: var(--text-light-muted); line-height: 1.6; margin-bottom: 1.5rem;">
+            An international architectural design-build and interior craft studio dedicated to the timeless transformation of high-value residential estates.
+          </p>
+          <div style="font-size: 0.76rem; color: var(--accent-brass-light); font-weight: 600;">
+            AIA MEMBER · MASTER BUILDERS GUILD · NCARB CERTIFIED
+          </div>
+        </div>
+
+        <!-- Col 2: Studio Locations -->
+        <div>
+          <div class="footer-col-title">Studio Ateliers</div>
+          <ul class="city-studios-list">
+            <li class="city-studio-item">
+              <div class="city-name">New York Atelier</div>
+              <div class="city-address">482 Broome Street, SoHo, NY 10013</div>
+            </li>
+            <li class="city-studio-item">
+              <div class="city-name">Los Angeles Atelier</div>
+              <div class="city-address">9450 Wilshire Blvd, Beverly Hills, CA 90212</div>
+            </li>
+            <li class="city-studio-item">
+              <div class="city-name">London Atelier</div>
+              <div class="city-address">24 Berkeley Square, Mayfair, London W1J 6HE</div>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Col 3: Navigation -->
+        <div>
+          <div class="footer-col-title">Disciplines</div>
+          <ul class="footer-links-list">
+            <li><a href="#transformations" class="footer-link-item">Before / After Showcase</a></li>
+            <li><a href="#disciplines" class="footer-link-item">Whole-Home Structural</a></li>
+            <li><a href="#disciplines" class="footer-link-item">Chef's Culinary Atriums</a></li>
+            <li><a href="#disciplines" class="footer-link-item">Master Spa Sanctuaries</a></li>
+            <li><a href="#materials" class="footer-link-item">Material Atelier</a></li>
+            <li><a href="#estimator" class="footer-link-item">Investment Estimator</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 4: Journal & Direct Line -->
+        <div>
+          <div class="footer-col-title">Architectural Journal</div>
+          <p style="font-size: 0.82rem; color: var(--text-light-muted); line-height: 1.5;">
+            Receive our quarterly monographs on structural masonry, rare stone sourcing, and private residential transformations.
+          </p>
+          <form class="newsletter-form" id="newsletterForm" onsubmit="event.preventDefault(); showToast('Thank you. You have been subscribed to our Architectural Journal.'); this.reset();">
+            <input type="email" class="newsletter-input" placeholder="Your private email" required />
+            <button type="submit" class="btn-primary" style="padding: 0.75rem 1.2rem; background: var(--accent-terracotta); border-color: var(--accent-terracotta);">
+              <span>Join</span>
+            </button>
+          </form>
+          <div style="margin-top: 1.5rem; font-size: 0.82rem; color: var(--accent-brass-light);">
+            Direct Inquiries: <a href="mailto:inquiries@ateliervanguard.com" style="text-decoration: underline;">inquiries@ateliervanguard.com</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Legal Strip -->
+      <div class="footer-bottom-bar">
+        <div>&copy; 2026 ATELIER VANGUARD ARCHITECTURAL DESIGN-BUILD GROUP. ALL RIGHTS RESERVED.</div>
+        <div style="display: flex; gap: 1.5rem;">
+          <a href="#" style="color: var(--text-light-muted);">Privacy Policy</a>
+          <a href="#" style="color: var(--text-light-muted);">Structural Warranty Deed</a>
+          <a href="#" style="color: var(--text-light-muted);">Licensing Accreditation</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-notice" id="toastNotice">Feasibility Request Received</div>
+
+  <!-- ==========================================================================
+       JAVASCRIPT: MOTION & INTERACTIVE ENGINES
+       ========================================================================== -->
+  <script>
+    // Register GSAP Plugins
+    gsap.registerPlugin(ScrollTrigger);
+
+    // ==========================================
+    // 1. HERO ENTRANCE MASKED REVEAL TIMELINE
+    // ==========================================
+    window.addEventListener('DOMContentLoaded', () => {
+      const heroTl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+
+      heroTl
+        .from('.hero-eyebrow', { y: 20, opacity: 0, duration: 0.7 })
+        .to('.hero-title .line', {
+          y: '0%',
+          duration: 1.0,
+          stagger: 0.12,
+          ease: 'power3.out'
+        }, '-=0.4')
+        .from('.hero-fade-item', {
+          y: 24,
+          opacity: 0,
+          duration: 0.8,
+          stagger: 0.12
+        }, '-=0.6')
+        .from('.hero-fade-media', {
+          scale: 1.05,
+          opacity: 0,
+          duration: 1.2,
+          ease: 'power2.out'
+        }, '-=0.9');
+
+      // Coordinated ScrollTrigger Reveals across sections
+      gsap.utils.toArray('.reveal-section').forEach((section) => {
+        gsap.from(section.querySelectorAll('.reveal-item'), {
+          y: 35,
+          opacity: 0,
+          duration: 0.85,
+          stagger: 0.12,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: section,
+            start: 'top 82%',
+            toggleActions: 'play none none reverse'
+          }
+        });
+      });
+
+      // Individual reveal elements
+      gsap.utils.toArray('.reveal-item:not(.reveal-section .reveal-item)').forEach((item) => {
+        gsap.from(item, {
+          y: 30,
+          opacity: 0,
+          duration: 0.8,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: item,
+            start: 'top 85%',
+            toggleActions: 'play none none reverse'
+          }
+        });
+      });
+    });
+
+    // ==========================================
+    // 2. MAGNETIC BUTTON MICRO-INTERACTION
+    // ==========================================
+    if (window.matchMedia('(pointer: fine)').matches) {
+      document.querySelectorAll('.magnetic-btn').forEach((btn) => {
+        const strength = 0.28;
+        btn.addEventListener('mousemove', (e) => {
+          const rect = btn.getBoundingClientRect();
+          const x = (e.clientX - rect.left - rect.width / 2) * strength;
+          const y = (e.clientY - rect.top - rect.height / 2) * strength;
+          gsap.to(btn, { x, y, duration: 0.3, ease: 'power2.out' });
+        });
+
+        btn.addEventListener('mouseleave', () => {
+          gsap.to(btn, { x: 0, y: 0, duration: 0.45, ease: 'elastic.out(1, 0.4)' });
+        });
+      });
+    }
+
+    // ==========================================
+    // 3. INTERACTIVE BEFORE & AFTER SLIDER
+    // ==========================================
+    const baContainer = document.getElementById('baContainer');
+    const baBeforeClip = document.getElementById('baBeforeClip');
+    const baHandle = document.getElementById('baHandle');
+    let isDragging = false;
+
+    function updateSliderPosition(clientX) {
+      const rect = baContainer.getBoundingClientRect();
+      let offsetX = clientX - rect.left;
+      if (offsetX < 0) offsetX = 0;
+      if (offsetX > rect.width) offsetX = rect.width;
+
+      const percentage = (offsetX / rect.width) * 100;
+      baBeforeClip.style.width = percentage + '%';
+      baHandle.style.left = percentage + '%';
+    }
+
+    baContainer.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      updateSliderPosition(e.clientX);
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+      updateSliderPosition(e.clientX);
+    });
+
+    window.addEventListener('mouseup', () => {
+      isDragging = false;
+    });
+
+    // Touch Support
+    baContainer.addEventListener('touchstart', (e) => {
+      isDragging = true;
+      if (e.touches[0]) updateSliderPosition(e.touches[0].clientX);
+    }, { passive: true });
+
+    window.addEventListener('touchmove', (e) => {
+      if (!isDragging) return;
+      if (e.touches[0]) updateSliderPosition(e.touches[0].clientX);
+    }, { passive: true });
+
+    window.addEventListener('touchend', () => {
+      isDragging = false;
+    });
+
+    // Scenario Switching Logic for Before/After
+    const scenarios = {
+      kitchen: {
+        beforeImg: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1600&q=85',
+        afterImg: 'https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1600&q=85',
+        timeframe: '14 Weeks Execution',
+        scope: '3 Wall Removals & Floor Recess',
+        equity: '+48% Appraised Valuation'
+      },
+      bath: {
+        beforeImg: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1600&q=85',
+        afterImg: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=1600&q=85',
+        timeframe: '10 Weeks Execution',
+        scope: 'Dual Steam Sub-Structure & Slab Bed',
+        equity: '+42% Appraised Valuation'
+      },
+      living: {
+        beforeImg: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1600&q=85',
+        afterImg: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1600&q=85',
+        timeframe: '18 Weeks Execution',
+        scope: 'Cantilever Steel & Pocket Glass Walls',
+        equity: '+55% Appraised Valuation'
+      }
+    };
+
+    document.querySelectorAll('.scenario-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.scenario-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const key = btn.dataset.scenario;
+        const data = scenarios[key];
+        if (!data) return;
+
+        const beforeImg = document.getElementById('baBeforeImg');
+        const afterImg = document.getElementById('baAfterImg');
+
+        gsap.to([beforeImg, afterImg], {
+          opacity: 0.3,
+          duration: 0.25,
+          onComplete: () => {
+            beforeImg.src = data.beforeImg;
+            afterImg.src = data.afterImg;
+            document.getElementById('transTime').textContent = data.timeframe;
+            document.getElementById('transScope').textContent = data.scope;
+            document.getElementById('transEquity').textContent = data.equity;
+            gsap.to([beforeImg, afterImg], { opacity: 1, duration: 0.35 });
+          }
+        });
+      });
+    });
+
+    // ==========================================
+    // 4. INTERACTIVE REMODEL ESTIMATOR LOGIC
+    // ==========================================
+    const sqftSlider = document.getElementById('sqftSlider');
+    const sqftDisplay = document.getElementById('sqftDisplay');
+    const priceRangeOutput = document.getElementById('priceRangeOutput');
+    const calcTimeline = document.getElementById('calcTimeline');
+    const calcPermits = document.getElementById('calcPermits');
+
+    const spaceBaseRates = {
+      kitchen: { basePerSqFt: 180, minTime: 10, maxTime: 14, permitWeeks: '3 – 5 Weeks' },
+      bath: { basePerSqFt: 220, minTime: 8, maxTime: 12, permitWeeks: '2 – 4 Weeks' },
+      floor: { basePerSqFt: 150, minTime: 14, maxTime: 18, permitWeeks: '4 – 6 Weeks' },
+      whole: { basePerSqFt: 195, minTime: 18, maxTime: 26, permitWeeks: '6 – 8 Weeks' },
+      historic: { basePerSqFt: 260, minTime: 20, maxTime: 30, permitWeeks: '8 – 12 Weeks' },
+      pavilion: { basePerSqFt: 210, minTime: 12, maxTime: 16, permitWeeks: '4 – 6 Weeks' }
+    };
+
+    const tierMultipliers = {
+      signature: 1.0,
+      bespoke: 1.45,
+      masterpiece: 2.1
+    };
+
+    function recalculateEstimator() {
+      const selectedSpace = document.querySelector('input[name="remodelSpace"]:checked').value;
+      const selectedTier = document.querySelector('input[name="finishTier"]:checked').value;
+      const sqft = parseInt(sqftSlider.value, 10);
+
+      sqftDisplay.textContent = sqft.toLocaleString() + ' SQ FT';
+
+      const spaceConfig = spaceBaseRates[selectedSpace] || spaceBaseRates.kitchen;
+      const multiplier = tierMultipliers[selectedTier] || 1.0;
+
+      const baseCost = sqft * spaceConfig.basePerSqFt * multiplier;
+      const lowCost = Math.round((baseCost * 0.9) / 5000) * 5000;
+      const highCost = Math.round((baseCost * 1.2) / 5000) * 5000;
+
+      priceRangeOutput.textContent = `$${lowCost.toLocaleString()} – $${highCost.toLocaleString()}`;
+
+      // Timeline scaling
+      const timeScale = sqft > 2500 ? 1.25 : (sqft > 4000 ? 1.5 : 1.0);
+      const estMinTime = Math.round(spaceConfig.minTime * timeScale);
+      const estMaxTime = Math.round(spaceConfig.maxTime * timeScale);
+
+      calcTimeline.textContent = `${estMinTime} – ${estMaxTime} Weeks`;
+      calcPermits.textContent = `${spaceConfig.permitWeeks} (Handled by Vanguard)`;
+    }
+
+    sqftSlider.addEventListener('input', recalculateEstimator);
+    document.querySelectorAll('input[name="remodelSpace"]').forEach(r => r.addEventListener('change', recalculateEstimator));
+    document.querySelectorAll('input[name="finishTier"]').forEach(r => r.addEventListener('change', recalculateEstimator));
+
+    // Transfer estimate directly into consultation form
+    document.getElementById('applyEstimateBtn').addEventListener('click', () => {
+      const selectedSpace = document.querySelector('input[name="remodelSpace"]:checked').value;
+      const sqft = sqftSlider.value;
+      const priceText = priceRangeOutput.textContent;
+
+      const remodelTypeSelect = document.getElementById('remodelType');
+      if (selectedSpace === 'kitchen') remodelTypeSelect.value = "Chef's Kitchen & Living";
+      else if (selectedSpace === 'bath') remodelTypeSelect.value = "Master Spa Sanctuary";
+      else if (selectedSpace === 'whole' || selectedSpace === 'floor') remodelTypeSelect.value = "Whole Residence Gut Remodel";
+      else if (selectedSpace === 'historic') remodelTypeSelect.value = "Historic Estate Restoration";
+      else if (selectedSpace === 'pavilion') remodelTypeSelect.value = "Outdoor Living Pavilion";
+
+      const projectVisionArea = document.getElementById('projectVision');
+      projectVisionArea.value = `Applied Scope: ${sqft} sq ft (${remodelTypeSelect.value}). Estimated Range: ${priceText}. Target start date requested.`;
+
+      document.getElementById('consultation').scrollIntoView({ behavior: 'smooth' });
+      showToast('Estimator preferences populated into consultation form.');
+    });
+
+    // ==========================================
+    // 5. MATERIAL ATELIER SWATCH SWITCHER
+    // ==========================================
+    const materialsData = {
+      travertine: {
+        name: 'Honed Romano Classico Travertine',
+        origin: 'QUARRY ORIGIN: TIVOLI, ITALY · HISTORIC BED 04',
+        desc: 'Quarried from the same geological strata used in Roman antiquity. Cross-cut and honed to a tactile matte finish that feels silky underfoot while retaining organic cellular micro-cavities.',
+        finish: 'Velvet Honed / Unfilled',
+        thermal: 'Optimal for Sub-Floor',
+        cert: 'Class 1 Monolithic',
+        img: 'https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=1200&q=85'
+      },
+      walnut: {
+        name: 'Fluted Architectural French Walnut',
+        origin: 'FOREST ORIGIN: RHÔNE-ALPES, FRANCE · SUSTAINABLE TIMBER RESERVE',
+        desc: 'Rift-sawn dark French walnut crafted into precision 12mm fluted acoustic slats. Naturally seasoned for 18 months to achieve structural dimensional stability against moisture.',
+        finish: 'Matte Carnauba Wax & Natural Oil',
+        thermal: 'Acoustic Sound Decoupled',
+        cert: 'FSC Certified Guild Grade',
+        img: 'https://images.unsplash.com/photo-1546484396-fb3fc6f95f98?auto=format&fit=crop&w=1200&q=85'
+      },
+      calacatta: {
+        name: 'Bookmatched Calacatta Viola Marble',
+        origin: 'QUARRY ORIGIN: APUAN ALPS, CARRARA, ITALY',
+        desc: 'Characterized by bold, dramatic cabernet-purple veining across a warm milky-white breccia base. Mirrored bookmatched slabs selected by our studio team in Carrara for continuous waterfall runs.',
+        finish: 'Satin Silk Honed',
+        thermal: 'Micro-Sealed Hydrophobic',
+        cert: 'First-Selection Block 12',
+        img: 'https://images.unsplash.com/photo-1615529182904-14819c35db37?auto=format&fit=crop&w=1200&q=85'
+      },
+      brass: {
+        name: 'Hand-Patinated Architectural Gunmetal Brass',
+        origin: 'ARTISANAL FOUNDRY: BIRMINGHAM, UNITED KINGDOM',
+        desc: 'Heavy solid billet brass chemically oxidised and hand-relieved to produce an antique living patina that deepens with human touch and age over decades of residential use.',
+        finish: 'Living Waxed Gunmetal',
+        thermal: 'Solid 3mm Billet Gauge',
+        cert: 'Hand-Forged British Guild',
+        img: 'https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=1200&q=85'
+      },
+      plaster: {
+        name: 'Hydrated Roman Venetian Plaster',
+        origin: 'FORMULATION: VENETO, ITALY · SLAKED LIME & CARRARA MARBLE DUST',
+        desc: 'Applied in five micro-thin layers by our certified Venetian artisans. Burnished to reflect natural illumination with profound visual depth and breathable organic air purification qualities.',
+        finish: 'Burnished Marmorino Tactile',
+        thermal: 'Breathable VOC-Free Mineral',
+        cert: 'Heritage UNESCO Certified',
+        img: 'https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&w=1200&q=85'
+      }
+    };
+
+    document.querySelectorAll('.material-swatch-card').forEach(card => {
+      card.addEventListener('click', () => {
+        document.querySelectorAll('.material-swatch-card').forEach(c => c.classList.remove('active'));
+        card.classList.add('active');
+
+        const key = card.dataset.mat;
+        const data = materialsData[key];
+        if (!data) return;
+
+        const largeImg = document.getElementById('matLargeImg');
+        gsap.to(largeImg, {
+          opacity: 0.2,
+          duration: 0.2,
+          onComplete: () => {
+            document.getElementById('matName').textContent = data.name;
+            document.getElementById('matOrigin').textContent = data.origin;
+            document.getElementById('matDesc').textContent = data.desc;
+            document.getElementById('matFinish').textContent = data.finish;
+            document.getElementById('matThermal').textContent = data.thermal;
+            document.getElementById('matCert').textContent = data.cert;
+            largeImg.src = data.img;
+            gsap.to(largeImg, { opacity: 1, duration: 0.35 });
+          }
+        });
+      });
+    });
+
+    // ==========================================
+    // 6. PORTFOLIO FILTER & INTERACTIVE MODAL
+    // ==========================================
+    const projectsData = {
+      1: {
+        title: "The Tribeca Cast-Iron Loft",
+        location: "SoHo / Tribeca, New York",
+        scope: "5,200 SQ FT Gut Remodel · 16 Weeks",
+        img: "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1600&q=85",
+        desc: "A meticulous transformation of an 1890 industrial cast-iron warehouse. We removed three non-structural partitions, preserved the original Douglas fir structural timber posts, and introduced monolithic Romano travertine volume dividers.",
+        engineering: "Structural steel headers recessed into joist ceiling cavities to achieve continuous 60-foot unobstructed sightlines. Dual-zone radiant floor heating embedded beneath 12-inch wide French oak planks.",
+        materials: "Romano Travertine, Fluted American Walnut, Patinated Gunmetal Brass, Slaked Lime Plaster."
+      },
+      2: {
+        title: "The Bel Air Modern Pavilion",
+        location: "Bel Air, Los Angeles, CA",
+        scope: "6,800 SQ FT Cantilevered Extension · 20 Weeks",
+        img: "https://images.unsplash.com/photo-1600565193348-f74bd3c7ccdf?auto=format&fit=crop&w=1600&q=85",
+        desc: "Radical re-imagining of a 1964 mid-century residence. We extended the primary living wing using cantilevered structural steel beams and integrated pocketing Sky-Frame thermal glass doors.",
+        engineering: "Complete seismic retrofitting, grade-beam helical pier foundation tie-backs, and integrated motorized louvred shade pergola systems.",
+        materials: "Honed Basalt, Teak Timber Decking, Venetian Marmorino Plaster, Low-Iron Pocket Glass."
+      },
+      3: {
+        title: "The Greenwich Culinary Atrium",
+        location: "Greenwich, Connecticut",
+        scope: "1,400 SQ FT Chef's Kitchen Atrium · 12 Weeks",
+        img: "https://images.unsplash.com/photo-1600585152220-90363fe7e115?auto=format&fit=crop&w=1600&q=85",
+        desc: "A conservatory-style glass atrium chef's kitchen featuring a monolithic 16-foot Calacatta Viola marble island and concealed sommelier wine cellar.",
+        engineering: "Structural glass atrium roof engineering with integrated thermal UV coatings and concealed condensation gutter systems.",
+        materials: "Calacatta Viola Marble, Rift White Oak, Burnished Architectural Brass, Gaggenau 400 Appliances."
+      },
+      4: {
+        title: "The Mayfair Georgian Townhouse",
+        location: "Mayfair, London, UK",
+        scope: "4,400 SQ FT Heritage Restoration · 18 Weeks",
+        img: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1600&q=85",
+        desc: "Grade-II listed Georgian architectural restoration. Balanced strict heritage preservation requirements with cutting-edge smart home automation and bespoke acoustic timber paneling.",
+        engineering: "Subterranean acoustic dampening and foundation damp-proofing membranes with sympathetic lime mortar restoration.",
+        materials: "Portland Stone, Dark Walnut Millwork, Unlacquered British Brass, Polished Microcement."
+      },
+      5: {
+        title: "The Aspen Basalt Spa Sanctuary",
+        location: "Aspen, Colorado",
+        scope: "850 SQ FT Wellness Sanctuary · 10 Weeks",
+        img: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=1600&q=85",
+        desc: "An alpine wellness retreat featuring a hand-carved monolithic basalt soaking tub, integrated steam shower with chromotherapy, and cedar-clad dry sauna.",
+        engineering: "High-capacity commercial steam generation with automated descaling and dual radiant floor heating loops.",
+        materials: "Hand-Carved Basalt, Western Red Cedar, Smoked Glass, Brushed Gunmetal Fixtures."
+      },
+      6: {
+        title: "The Palisades Coastal Villa",
+        location: "Pacific Palisades, California",
+        scope: "7,400 SQ FT Overhaul · 22 Weeks",
+        img: "https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=1600&q=85",
+        desc: "Overlooking the Pacific Ocean, this residence was gutted to introduce a continuous 45ft sliding glass facade, seamless microcement floors, and custom curved walnut millwork.",
+        engineering: "Deep foundation caissons for coastal bluff stabilization and motorized flush threshold drainage tracks.",
+        materials: "Continuously Poured Microcement, Fluted White Oak, Zero-Threshold Glass, Textured Quartzite."
+      }
+    };
+
+    // Filter logic
+    document.querySelectorAll('.filter-tab-btn').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.filter-tab-btn').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+
+        const filter = tab.dataset.filter;
+        document.querySelectorAll('.project-card').forEach(card => {
+          const cat = card.dataset.category || '';
+          if (filter === 'all' || cat.includes(filter)) {
+            gsap.to(card, { opacity: 1, scale: 1, duration: 0.35, display: 'flex' });
+          } else {
+            gsap.to(card, { opacity: 0, scale: 0.95, duration: 0.25, display: 'none' });
+          }
+        });
+      });
+    });
+
+    // Modal Opening logic
+    const modalBackdrop = document.getElementById('projectModal');
+    const modalContainer = document.getElementById('modalContentContainer');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+
+    document.querySelectorAll('.project-card').forEach(card => {
+      card.addEventListener('click', () => {
+        const id = card.dataset.projectId;
+        const project = projectsData[id];
+        if (!project) return;
+
+        modalContainer.innerHTML = `
+          <div style="margin-bottom: 1.5rem;">
+            <span class="arch-tag arch-tag-light" style="margin-bottom: 0.5rem;">ARCHITECTURAL CASE STUDY</span>
+            <h2 class="heading-display" style="font-size: 2.2rem; color: #fff; line-height: 1.15; margin-bottom: 0.3rem;">${project.title}</h2>
+            <div style="color: var(--accent-brass-light); font-size: 0.88rem; font-weight: 600;">${project.location} · ${project.scope}</div>
+          </div>
+          <div style="height: 380px; border-radius: var(--radius-sm); overflow: hidden; margin-bottom: 2rem; border: 1px solid var(--border-dark);">
+            <img src="${project.img}" alt="${project.title}" style="width: 100%; height: 100%; object-fit: cover;" />
+          </div>
+          <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 2rem; margin-bottom: 2rem;">
+            <div>
+              <h4 style="font-family: var(--font-display); font-size: 0.82rem; color: var(--accent-brass-light); margin-bottom: 0.5rem; letter-spacing: 0.1em;">SPATIAL NARRATIVE</h4>
+              <p style="font-size: 0.92rem; color: var(--text-light-muted); line-height: 1.6;">${project.desc}</p>
+            </div>
+            <div>
+              <h4 style="font-family: var(--font-display); font-size: 0.82rem; color: var(--accent-brass-light); margin-bottom: 0.5rem; letter-spacing: 0.1em;">STRUCTURAL ENGINEERING</h4>
+              <p style="font-size: 0.92rem; color: var(--text-light-muted); line-height: 1.6;">${project.engineering}</p>
+            </div>
+          </div>
+          <div style="background: var(--bg-charcoal); padding: 1.2rem 1.5rem; border-radius: var(--radius-sm); border: 1px solid var(--border-dark); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+            <div>
+              <div style="font-size: 0.72rem; color: var(--text-light-muted); text-transform: uppercase;">Curated Material Palette</div>
+              <div style="font-size: 0.9rem; font-weight: 600; color: #fff;">${project.materials}</div>
+            </div>
+            <a href="#consultation" onclick="closeProjectModal()" class="btn-primary" style="padding: 0.75rem 1.4rem; font-size: 0.8rem; background: var(--accent-terracotta); border-color: var(--accent-terracotta);">
+              <span>Inquire on Similar Commission</span>
+            </a>
+          </div>
+        `;
+
+        modalBackdrop.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+
+    function closeProjectModal() {
+      modalBackdrop.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    closeModalBtn.addEventListener('click', closeProjectModal);
+    modalBackdrop.addEventListener('click', (e) => {
+      if (e.target === modalBackdrop) closeProjectModal();
+    });
+
+    // ==========================================
+    // 7. CONSULTATION FORM SUBMISSION
+    // ==========================================
+    document.getElementById('consultationForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = document.getElementById('clientName').value;
+      showToast(`Thank you, ${name}. Your feasibility inquiry has been registered. Our Principal Architect will contact you shortly.`);
+      document.getElementById('consultationForm').reset();
+    });
+
+    function showToast(message) {
+      const toast = document.getElementById('toastNotice');
+      toast.textContent = message;
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 4500);
+    }
+
+    // ==========================================
+    // 8. MOBILE DRAWER NAVIGATION
+    // ==========================================
+    const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+    const closeDrawerBtn = document.getElementById('closeDrawerBtn');
+    const mobileDrawer = document.getElementById('mobileDrawer');
+    const drawerOverlay = document.getElementById('drawerOverlay');
+
+    function toggleMobileDrawer(open) {
+      if (open) {
+        mobileDrawer.classList.add('active');
+        drawerOverlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      } else {
+        mobileDrawer.classList.remove('active');
+        drawerOverlay.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    }
+
+    mobileMenuToggle.addEventListener('click', () => toggleMobileDrawer(true));
+    closeDrawerBtn.addEventListener('click', () => toggleMobileDrawer(false));
+    drawerOverlay.addEventListener('click', () => toggleMobileDrawer(false));
+
+    document.querySelectorAll('.drawer-nav-link').forEach(link => {
+      link.addEventListener('click', () => toggleMobileDrawer(false));
+    });
+  </script>
+</body>
+</html>
