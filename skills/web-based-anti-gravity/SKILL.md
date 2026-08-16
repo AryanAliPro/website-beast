@@ -1,5 +1,5 @@
 ---
-name: web-beast
+name: web-based-anti-gravity
 description: Design and build award-level, fully custom websites for any business or website type (trades, SaaS, restaurants, agencies, portfolios, e-commerce, personal brands, etc.) — the kind of site that feels handcrafted by a top Webflow/Framer studio, never a generic template. Use this skill whenever the user asks to design, build, redesign, or mock up a website, landing page, homepage, portfolio, product page, or any HTML/frontend surface — even if they just say "build me a site for X" without using words like "custom" or "award-winning." Also use it when a client project (e.g. a roofing, HVAC, cleaning, or construction site) needs a real, presentation-ready single-page build rather than a rough draft. Covers art direction, layout systems, real public imagery sourcing, GSAP/ScrollTrigger motion, SVG animation, Lottie micro-interactions, and a pre-delivery quality checklist. Do not use for plain content edits, copywriting-only requests, or non-visual coding tasks.
 ---
 
