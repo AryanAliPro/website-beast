@@ -4,6 +4,8 @@ An Anti-gravity IDE skill for Gemini models that designs and builds distinctive,
 
 Web Beast is a practical design-direction and implementation system for landing pages, marketing sites, portfolios, product pages, and other frontend surfaces. It pushes each build toward a specific visual point of view instead of a reusable template: industry-grounded art direction, deliberate typography, real imagery, restrained motion, responsive behavior, and a final quality pass.
 
+[View the live demo](https://aryanalipro.github.io/website-beast/) · [Open the demo source](examples/atelier-vanguard-demo.html)
+
 ## What it covers
 
 - Brief interpretation: business, audience, tone, offer, and constraints
@@ -21,6 +23,22 @@ Web Beast is a practical design-direction and implementation system for landing 
 3. Keep `SKILL.md` at the root of the skill directory and preserve the `references/` directory beside it.
 4. Restart or reload Anti-gravity IDE so it discovers the skill.
 5. Ask Gemini to design or build a website. The skill is intended to activate for website, landing-page, homepage, portfolio, product-page, and frontend-surface requests.
+
+### Direct CLI installation
+
+With Node.js 18+ installed, install only this skill globally for Antigravity:
+
+```bash
+npx skills add AryanAliPro/website-beast --skill web-based-anti-gravity --agent antigravity --global --yes
+```
+
+For a project-local installation instead:
+
+```bash
+npx skills add AryanAliPro/website-beast --skill web-based-anti-gravity --agent antigravity --yes
+```
+
+If you prefer a manual install, copy `skills/web-based-anti-gravity/` into either `~/.gemini/antigravity/skills/` for global use or `<your-project>/.agents/skills/` for project use, then restart or reload Antigravity.
 
 ## Gemini guidance
 
@@ -40,6 +58,8 @@ skills/
 examples/
 └── atelier-vanguard-demo.html  # Optional reference/demo page
 ```
+
+The root `index.html` mirrors the demo so GitHub Pages can render it directly.
 
 ## Usage guidance
 
